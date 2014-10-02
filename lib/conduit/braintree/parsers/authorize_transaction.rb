@@ -4,19 +4,19 @@ module Conduit::Driver::Braintree
   class AuthorizeTransaction::Parser < Parser::Base
 
     attribute :transaction_id do
-      @response_body[:transaction][:id]
+      object_path('transaction/id')
     end
 
     attribute :transaction_type do
-      @response_body[:transaction][:type]
+      object_path('transaction/type')
     end
 
     attribute :transaction_amount do
-      @response_body[:transaction][:amount]
+      object_path('transaction/amount')
     end
 
     attribute :transaction_status do
-      @response_body[:transaction][:status]
+      object_path('transaction/status')
     end
 
   end

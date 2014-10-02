@@ -1,4 +1,4 @@
-require 'conduit/braintree/configuration'
+require 'conduit/braintree/json/transaction'
 
 module Conduit::Driver::Braintree
   class VoidTransaction < Conduit::Core::Action
@@ -11,22 +11,7 @@ module Conduit::Driver::Braintree
     #
     def perform
       response = Braintree::Transaction.void(@options[:reference_number])
-      if response.success?
-        body = MultiJson.dump({
-          successful: response.success?,
-          transaction: {
-            id: response.transaction.id,
-            type: response.transaction.type,
-            amount: response.transaction.amount,
-            status: response.transaction.status
-          }
-        })
-      else
-        body = MultiJson.dump({
-          successful: response.success?,
-          errors: response.errors
-        })
-      end
+      body = Conduit::Driver::Braintree::Json::Transaction.new(response).to_json
 
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)

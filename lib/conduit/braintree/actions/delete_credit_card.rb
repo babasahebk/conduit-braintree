@@ -1,4 +1,4 @@
-require 'conduit/braintree/configuration'
+require 'conduit/braintree/json/credit_card'
 
 module Conduit::Driver::Braintree
   class DeleteCreditCard < Conduit::Core::Action
