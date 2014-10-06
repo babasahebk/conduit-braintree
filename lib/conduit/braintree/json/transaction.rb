@@ -1,27 +1,18 @@
+require 'conduit/braintree/json/base'
+
 module Conduit::Driver::Braintree
   module Json
-    class Transaction
-      def initialize(response)
-        @response = response
-      end
+    class Transaction < Base
 
-      def to_json
-        if @response.success?
-          MultiJson.dump({
-            successful: @response.success?,
-            transaction: {
-              id: @response.transaction.id,
-              type: @response.transaction.type,
-              amount: @response.transaction.amount,
-              status: @response.transaction.status
-            }
-          })
-        else
-          MultiJson.dump({
-            successful: @response.success?,
-            errors: @response.errors
-          })
-        end
+      def item_options
+        {
+          transaction: {
+            id:     response.transaction.id,
+            type:   response.transaction.type,
+            amount: response.transaction.amount,
+            status: response.transaction.status
+          }
+        }
       end
     end
   end
