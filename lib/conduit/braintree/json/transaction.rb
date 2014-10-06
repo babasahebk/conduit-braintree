@@ -6,20 +6,20 @@ module Conduit::Driver::Braintree
       end
 
       def to_json
-        if response.success?
-          body = MultiJson.dump({
-            successful: response.success?,
+        if @response.success?
+          MultiJson.dump({
+            successful: @response.success?,
             transaction: {
-              id: response.transaction.id,
-              type: response.transaction.type,
-              amount: response.transaction.amount,
-              status: response.transaction.status
+              id: @response.transaction.id,
+              type: @response.transaction.type,
+              amount: @response.transaction.amount,
+              status: @response.transaction.status
             }
           })
         else
-          body = MultiJson.dump({
-            successful: response.success?,
-            errors: response.errors
+          MultiJson.dump({
+            successful: @response.success?,
+            errors: @response.errors
           })
         end
       end

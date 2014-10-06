@@ -21,8 +21,8 @@ module Conduit::Driver::Braintree
           })
         else
           MultiJson.dump({
-            successful: response.success?,
-            errors: response.errors
+            successful: @response.success?,
+            errors: @response.errors
           })
         end
       end
