@@ -4,27 +4,27 @@ module Conduit::Driver::Braintree
   class UpdateCreditCard::Parser < Parser::Base
 
     attribute :expiration_month do
-      credit_card[:expiration_month]
+      object_path('credit_card/expiration_month')
     end
 
     attribute :expiration_year do
-      credit_card[:expiration_year]
+      object_path('credit_card/expiration_year')
     end
 
     attribute :card_type do
-      credit_card[:card_type]
+      object_path('credit_card/card_type')
     end
 
     attribute :last_four do
-      credit_card[:last_four]
+      object_path('credit_card/last_four')
     end
 
     attribute :token do
-      credit_card[:token]
+      object_path('credit_card/token')
     end
 
     attribute :bin do
-      credit_card[:bin]
+      object_path('credit_card/bin')
     end
   end
 end
