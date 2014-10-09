@@ -33,6 +33,7 @@ module Conduit::Driver::Braintree
           message: message
         }]
       })
+
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: body, body: body, parser: parser)
     end

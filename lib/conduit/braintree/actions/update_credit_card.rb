@@ -19,8 +19,6 @@ module Conduit::Driver::Braintree
       Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
 
     rescue Braintree::NotFoundError
-      Rails.logger.error(
-        "Failed to find card with token #{@options[:token]} during update.")
       Conduit::Driver::Braintree::CreateCreditCard.new(@options).perform
     rescue Braintree::BraintreeError => error
       report_exception_as_error(error)
