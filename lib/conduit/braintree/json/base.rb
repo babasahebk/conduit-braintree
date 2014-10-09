@@ -9,7 +9,7 @@ module Conduit::Driver::Braintree
       end
 
       def to_json
-        response_options = base_options.merge(item_options)
+        response_options = response.success? ? base_options.merge(item_options) : base_options
         MultiJson.dump(response_options)
       end
 

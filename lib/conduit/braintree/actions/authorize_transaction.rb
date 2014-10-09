@@ -1,7 +1,8 @@
 require 'conduit/braintree/json/transaction'
+require 'conduit/braintree/actions/base'
 
 module Conduit::Driver::Braintree
-  class AuthorizeTransaction < Conduit::Core::Action
+  class AuthorizeTransaction < Base
 
     required_attributes :amount, :token
 
@@ -16,6 +17,9 @@ module Conduit::Driver::Braintree
 
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
+
+    rescue Braintree::BraintreeError => error
+      report_braintree_exceptions(error)
     end
   end
 end

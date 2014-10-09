@@ -1,7 +1,8 @@
 require 'conduit/braintree/json/credit_card'
+require 'conduit/braintree/actions/base'
 
 module Conduit::Driver::Braintree
-  class DeleteCreditCard < Conduit::Core::Action
+  class DeleteCreditCard < Base
 
     required_attributes :token
 
@@ -22,6 +23,9 @@ module Conduit::Driver::Braintree
 
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
+
+    rescue Braintree::BraintreeError => error
+      report_exception_as_error(error)
     end
   end
 end
