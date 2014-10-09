@@ -1,7 +1,8 @@
 require 'conduit/braintree/json/credit_card'
+require 'conduit/braintree/actions/base'
 
 module Conduit::Driver::Braintree
-  class UpdateCreditCard < Conduit::Core::Action
+  class UpdateCreditCard < Base
 
     required_attributes :token, :cardholder_name, :number, :cvv,
                         :expiration_month, :expiration_year, :billing_address
@@ -16,6 +17,11 @@ module Conduit::Driver::Braintree
 
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
+
+    rescue Braintree::NotFoundError
+      Conduit::Driver::Braintree::CreateCreditCard.new(@options).perform
+    rescue Braintree::BraintreeError => error
+      report_exception_as_error(error)
     end
   end
 end
