@@ -19,6 +19,9 @@ module Conduit::Driver::Braintree
         object_path('errors') || []
       end
 
+      # Alias errors as required response_errors method
+      alias_method :response_errors, :errors
+
       def object_path(path)
         data = json
         path.split('/').map do |element|
