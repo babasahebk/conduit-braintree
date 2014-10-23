@@ -2,6 +2,18 @@ require 'conduit/braintree/json/credit_card'
 
 module Conduit::Driver::Braintree
   class Base < Conduit::Core::Action
+    def self.inherited(base)
+      base.send :required_attributes, *(Conduit::Driver::Braintree.credentials)
+      base.send :required_attributes,
+        *(Conduit::Driver::Braintree.required_attributes)
+      base.send :optional_attributes,
+        *(Conduit::Driver::Braintree.optional_attributes)
+    end
+
+    def initialize(options)
+      super(options)
+      configure_braintree
+    end
 
     def report_exception_as_error(exception)
       case exception.class.name
@@ -36,6 +48,18 @@ module Conduit::Driver::Braintree
 
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: body, body: body, parser: parser)
+    end
+
+    private
+
+    def configure_braintree
+      configuration_keys = Conduit::Driver::Braintree.credentials +
+        Conduit::Driver::Braintree.required_attributes
+
+      configuration_keys.each do |key|
+        ::Braintree::Configuration.send "#{key}=", @options[key]
+        @options.delete(key)
+      end
     end
   end
 end
