@@ -4,8 +4,12 @@ module Conduit
     module Braintree
       extend Conduit::Core::Driver
 
-      required_credentials :validation_key, :customer_id
+      required_credentials :merchant_id, :private_key, :public_key
+      required_attributes  :environment
+      optional_attributes  :mock_status
 
+      action :create_customer
+      action :find_customer
       action :create_credit_card
       action :update_credit_card
       action :delete_credit_card

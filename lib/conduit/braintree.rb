@@ -1,3 +1,4 @@
+require 'braintree'
 require 'conduit/braintree/version'
 require 'conduit/braintree/configuration'
 

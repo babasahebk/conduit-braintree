@@ -5,17 +5,17 @@ module Conduit::Driver::Braintree
     class CreditCard < Base
 
       def item_options
-        {
-          credit_card: {
-            token:            response.credit_card.token,
-            bin:              response.credit_card.bin,
-            card_type:        response.credit_card.card_type,
-            cardholder_name:  response.credit_card.cardholder_name,
-            expiration_month: response.credit_card.expiration_month,
-            expiration_year:  response.credit_card.expiration_year,
-            last_four:        response.credit_card.last_4
-          }
-        }
+        { credit_card: credit_card_attributes }
+      end
+
+      private
+
+      def credit_card_attributes
+        attr_names = Conduit::Driver::Braintree::CreateCreditCard::Parser.attributes
+
+        attr_names.inject({}) do |h, attr_name|
+          h.merge(attr_name => response.credit_card.send(attr_name))
+        end
       end
     end
   end

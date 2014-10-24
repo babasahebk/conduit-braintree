@@ -5,14 +5,18 @@ module Conduit::Driver::Braintree
     class Transaction < Base
 
       def item_options
-        {
-          transaction: {
-            id:     response.transaction.id,
-            type:   response.transaction.type,
-            amount: response.transaction.amount,
-            status: response.transaction.status
-          }
-        }
+        { transaction: transaction_attributes }
+      end
+
+      private
+
+      def transaction_attributes
+        attr_names = Conduit::Driver::Braintree::AuthorizeTransaction::Parser.
+          attributes
+
+        attr_names.inject({}) do |h, attr_name|
+          h.merge(attr_name => response.transaction.send(attr_name))
+        end
       end
     end
   end
