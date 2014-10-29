@@ -2,6 +2,8 @@ require 'braintree'
 require 'conduit/braintree/version'
 require 'conduit/braintree/configuration'
 
+require 'conduit/not_found_error'
+
 require 'conduit'
 
 # Set the driver path
