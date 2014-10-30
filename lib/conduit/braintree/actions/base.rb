@@ -57,7 +57,10 @@ module Conduit::Driver::Braintree
         Conduit::Driver::Braintree.required_attributes
 
       configuration_keys.each do |key|
-        ::Braintree::Configuration.send "#{key}=", @options[key]
+        val = @options[key]
+        val = val.to_sym if key == :environment
+
+        ::Braintree::Configuration.send "#{key}=", val
         @options.delete(key)
       end
     end

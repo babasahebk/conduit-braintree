@@ -12,10 +12,15 @@ module Conduit::Driver::Braintree
 
       def customer_attributes
         attr_names = Conduit::Driver::Braintree::CreateCustomer::Parser.attributes
-        attr_names.delete(:customer_id).add(:id)
+
+        response_object = response.respond_to?(:customer) ? response.customer : response
 
         attr_names.inject({}) do |h, attr_name|
-          h.merge(attr_name => response.customer.send(attr_name))
+          if attr_name == :customer_id
+            h.merge(id: response_object.id)
+          else
+            h.merge(attr_name => response_object.try(attr_name))
+          end
         end
       end
     end
