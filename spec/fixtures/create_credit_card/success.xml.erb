@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<credit-card>
+  <token>24sss2</token>
+  <cardholder-name><%= cardholder_name %></cardholder-name>
+  <expiration-month><%= expiration_month %></expiration-month>
+  <expiration-year><%= expiration_year %></expiration-year>
+  <card-type>Visa</card-type>
+  <bin><%= number[0, 6] %></bin>
+  <last-4><%= number[-4, 4] %></last-4>
+</credit-card>

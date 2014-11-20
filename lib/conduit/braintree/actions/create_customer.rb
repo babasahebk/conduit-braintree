@@ -8,7 +8,9 @@ module Conduit::Driver::Braintree
     optional_attributes :first_name, :last_name, :company, :email, :phone, :fax,
                         :website
 
-    def perform
+    private
+
+    def perform_request
       create_options = @options.except(:customer_id)
       create_options.merge!(id: @options[:customer_id])
 

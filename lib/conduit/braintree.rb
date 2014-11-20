@@ -1,7 +1,7 @@
 require 'braintree'
 require 'conduit/braintree/version'
 require 'conduit/braintree/configuration'
-
+require 'conduit/braintree/request_mocker'
 require 'conduit/not_found_error'
 
 require 'conduit'

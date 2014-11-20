@@ -12,7 +12,7 @@ module Conduit::Driver::Braintree
     end
 
     attribute :transaction_amount do
-      object_path('transaction/amount')
+      BigDecimal(object_path('transaction/amount'))
     end
 
     attribute :transaction_status do

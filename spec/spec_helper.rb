@@ -12,6 +12,8 @@ Dir[File.join(File.dirname(__FILE__), 'support', '**', '*.rb')].each do |f|
   require f
 end
 
+Braintree::Configuration.logger.level = Logger::WARN
+
 # Rspec Configuration
 #
 RSpec.configure do |config|

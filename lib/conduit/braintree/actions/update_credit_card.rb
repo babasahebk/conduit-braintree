@@ -7,11 +7,13 @@ module Conduit::Driver::Braintree
     required_attributes :token, :cardholder_name, :number, :cvv,
                         :expiration_month, :expiration_year, :billing_address
 
+    private
+
     # Required entry method, the main driver
     # class will use this to trigger the
     # request.
     #
-    def perform
+    def perform_request
       response = Braintree::CreditCard.update(@options[:token], @options)
       body = Conduit::Driver::Braintree::Json::CreditCard.new(response).to_json
 
@@ -21,7 +23,7 @@ module Conduit::Driver::Braintree
     rescue Braintree::NotFoundError => error
       raise(Conduit::NotFoundError, error.message)
     rescue Braintree::BraintreeError => error
-      report_exception_as_error(error)
+      report_braintree_exceptions(error)
     end
   end
 end

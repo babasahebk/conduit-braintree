@@ -6,26 +6,21 @@ module Conduit::Driver::Braintree
 
     required_attributes :token
 
+    private
+
     # Required entry method, the main driver2
     # class will use this to trigger the
     # request.
     #
-    def perform
+    def perform_request
       response = Braintree::CreditCard.delete(@options[:token])
-      if response
-        body = MultiJson.dump({ successful: response })
-      else
-        body = MultiJson.dump({
-          successful: response.success?,
-          errors: response.errors
-        })
-      end
 
+      body = MultiJson.dump({ successful: response })
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
 
     rescue Braintree::BraintreeError => error
-      report_exception_as_error(error)
+      report_braintree_exceptions(error)
     end
   end
 end
