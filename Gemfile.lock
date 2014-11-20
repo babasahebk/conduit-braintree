@@ -1,11 +1,11 @@
 PATH
   remote: .
   specs:
-    conduit-braintree (0.1.4)
+    conduit-braintree (0.1.5)
       braintree (~> 2.29.0)
       conduit (~> 0.6.0)
       multi_json (~> 1.10.1)
-      webmock (~> 1.20.4)
+      webmock (~> 1.19.0)
 
 GEM
   remote: https://ndJJ64w5T4xsxaU6DJJb@gem.fury.io/bqsoft/
@@ -119,7 +119,7 @@ GEM
     tilt (1.4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    webmock (1.20.4)
+    webmock (1.19.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
 
