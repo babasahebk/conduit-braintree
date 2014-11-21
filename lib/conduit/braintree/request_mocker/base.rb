@@ -7,7 +7,7 @@ module Conduit::Braintree::RequestMocker
   class Base
     include WebMock::API
 
-    FIXTURE_PREFIX = "#{File.dirname(__FILE__)}/../../../../spec/fixtures".freeze
+    FIXTURE_PREFIX = "#{File.dirname(__FILE__)}//fixtures".freeze
 
     def initialize(base, options = nil)
       @base = base
