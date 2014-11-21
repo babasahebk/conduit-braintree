@@ -5,7 +5,9 @@ module Conduit::Driver::Braintree
   class FindCustomer < Base
     required_attributes :customer_id
 
-    def perform
+    private
+
+    def perform_request
       response = Braintree::Customer.find(@options[:customer_id])
       body     = Conduit::Driver::Braintree::Json::Customer.new(response).to_json
 
@@ -14,7 +16,7 @@ module Conduit::Driver::Braintree
     rescue Conduit::NotFoundError
       raise
     rescue Braintree::BraintreeError => error
-      report_exception_as_error(error)
+      report_braintree_exceptions(error)
     end
   end
 end

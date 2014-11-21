@@ -17,7 +17,7 @@ module Conduit::Driver::Braintree
         attr_names.inject({}) do |h, attr_name|
           transaction_attr = attr_name.to_s.gsub(/transaction_/, '')
 
-          h.merge(attr_name => response.transaction.send(transaction_attr))
+          h.merge(transaction_attr => response.transaction.send(transaction_attr))
         end
       end
     end

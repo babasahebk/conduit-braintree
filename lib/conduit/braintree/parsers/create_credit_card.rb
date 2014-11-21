@@ -3,6 +3,10 @@ require 'conduit/braintree/parsers/base'
 module Conduit::Driver::Braintree
   class CreateCreditCard::Parser < Parser::Base
 
+    attribute :cardholder_name do
+      object_path('credit_card/cardholder_name')
+    end
+
     attribute :expiration_month do
       object_path('credit_card/expiration_month')
     end

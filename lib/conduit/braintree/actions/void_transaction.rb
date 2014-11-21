@@ -6,11 +6,13 @@ module Conduit::Driver::Braintree
 
     required_attributes :reference_number
 
+    private
+
     # Required entry method, the main driver
     # class will use this to trigger the
     # request.
     #
-    def perform
+    def perform_request
       response = Braintree::Transaction.void(@options[:reference_number])
       body = Conduit::Driver::Braintree::Json::Transaction.new(response).to_json
 

@@ -15,7 +15,18 @@ module Conduit::Driver::Braintree
       configure_braintree
     end
 
-    def report_exception_as_error(exception)
+    # Performs the request, with mocking if requested
+    #
+    def perform
+      if mock_mode?
+        mocker = request_mocker.new(self, @options)
+        mocker.with_mocking { perform_request }
+      else
+        perform_request
+      end
+    end
+
+    def report_braintree_exceptions(exception)
       case exception.class.name
       when 'Braintree::AuthenticationError'
         respond_with_error('Braintree API credentials incorrect')
@@ -30,21 +41,19 @@ module Conduit::Driver::Braintree
       when 'Braintree::UpgradeRequiredError'
         respond_with_error('Braintree upgrade required')
       when 'Braintree::NotFoundError'
-        respond_with_error("Failed to find card with token #{@options[:token]}")
+        identifier = @options[:token] || @options[:customer_id]
+        respond_with_error("Failed to find resource with identifier #{identifier}")
       else
         respond_with_error('Braintree error')
       end
     end
 
     def respond_with_error(message)
-      body = MultiJson.dump({
-        successful: false,
-        errors: [{
-          attribute: :base,
-          code: 'error',
-          message: message
-        }]
+      response = OpenStruct.new({
+        success?: false,
+        errors: [OpenStruct.new(attribute: :base, code: 'error', message: message)]
       })
+      body = Conduit::Driver::Braintree::Json::CreditCard.new(response).to_json
 
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: body, body: body, parser: parser)
@@ -63,6 +72,18 @@ module Conduit::Driver::Braintree
         ::Braintree::Configuration.send "#{key}=", val
         @options.delete(key)
       end
+    end
+
+    def request_mocker
+      "Conduit::Braintree::RequestMocker::#{action_name}".constantize
+    end
+
+    def action_name
+      self.class.name.split('::').last
+    end
+
+    def mock_mode?
+      @options.key?(:mock_status)
     end
   end
 end

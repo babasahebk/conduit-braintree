@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'conduit',    '~> 0.6.0'
   s.add_dependency 'multi_json', '~> 1.10.1'
   s.add_dependency 'braintree',  '~> 2.29.0'
+  s.add_dependency 'webmock',    '~> 1.19.0'
 
   # Development Dependencies
   #

@@ -6,11 +6,13 @@ module Conduit::Driver::Braintree
 
     required_attributes :amount, :token
 
+    private
+
     # Required entry method, the main driver
     # class will use this to trigger the
     # request.
     #
-    def perform
+    def perform_request
       response = Braintree::Transaction.sale(amount: @options[:amount],
                                              payment_method_token: @options[:token])
       body = Conduit::Driver::Braintree::Json::Transaction.new(response).to_json
