@@ -32,7 +32,11 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       let(:mock_status)        { 'failure' }
       its(:response_status)    { should eql mock_status }
       its(:errors) do
-        should eql ["Invalid verification merchant account ID (917218)"]
+        expected = {
+          merchant_id: ["Invalid verification merchant account ID (917218)"]
+        }
+
+        should eql expected
       end
     end
   end

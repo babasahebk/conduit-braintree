@@ -15,8 +15,11 @@ module Conduit::Driver::Braintree
         object_path('successful') ? 'success' : 'failure'
       end
 
+      # Returns a hash of errors reported by Braintree
+      # If no errors were reported, returns an empty hash
+      #
       def errors
-        object_path('errors') || []
+        @errors ||= object_path('errors') || []
       end
 
       # Alias errors as required response_errors method
