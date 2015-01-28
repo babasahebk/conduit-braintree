@@ -19,9 +19,7 @@ module Conduit::Driver::Braintree
       # If no errors were reported, returns an empty hash
       #
       def errors
-        @errors ||= object_path('errors') || {}
-        @errors = { base: @errors } if @errors.is_a?(Array)
-        @errors
+        @errors ||= object_path('errors') || []
       end
 
       # Alias errors as required response_errors method
