@@ -61,6 +61,10 @@ module Conduit::Driver::Braintree
 
     private
 
+    def whitelist_options
+      @options.except(:mock_status)
+    end
+
     def configure_braintree
       configuration_keys = Conduit::Driver::Braintree.credentials +
         Conduit::Driver::Braintree.required_attributes

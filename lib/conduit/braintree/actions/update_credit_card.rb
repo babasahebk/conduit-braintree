@@ -14,7 +14,7 @@ module Conduit::Driver::Braintree
     # request.
     #
     def perform_request
-      response = Braintree::CreditCard.update(@options[:token], @options)
+      response = Braintree::CreditCard.update(@options[:token], whitelist_options)
       body = Conduit::Driver::Braintree::Json::CreditCard.new(response).to_json
 
       parser = parser_class.new(body)

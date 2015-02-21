@@ -32,7 +32,9 @@ module Conduit::Braintree::RequestMocker
     private
 
     def render_response
-      response = Tilt::ERBTemplate.new(fixture).render(@base.view_context)
+      response_mock = MockHelpers.new(@options)
+      response = Tilt::ERBTemplate.new(fixture).
+        render(@base.view_context, mock: response_mock)
       response.encode!('ASCII-8BIT')
 
       f = StringIO.new('')
@@ -66,5 +68,32 @@ module Conduit::Braintree::RequestMocker
     def error_response
       '{"status": 500, "error": "Internal Service Error"}'
     end
+  end
+end
+
+class MockHelpers
+  TEST_CARD_NUMBER = '4111111111111111'
+
+  def initialize(options = {})
+    @options = options
+  end
+
+  def bin
+    card_number[0, 6]
+  end
+
+  def last_4
+    card_number[-4, 4]
+  end
+
+  private
+
+  def card_number
+    return TEST_CARD_NUMBER if number =~ /javascript/
+    number
+  end
+
+  def number
+    @number ||= @options[:number] || TEST_CARD_NUMBER
   end
 end
