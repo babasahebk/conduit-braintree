@@ -14,7 +14,7 @@ module Conduit::Driver::Braintree
     # request.
     #
     def perform_request
-      response = Braintree::CreditCard.create(@options.except(:mock_status))
+      response = Braintree::CreditCard.create(whitelist_options)
       body = Conduit::Driver::Braintree::Json::CreditCard.new(response).to_json
 
       parser = parser_class.new(body)
