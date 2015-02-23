@@ -6,6 +6,9 @@ module Conduit::Braintree::RequestMocker
       if @mock_status == :failure
         @stub = stub_request(:any, /braintree/).
           to_return(body: nil, status: 404, headers: {})
+      elsif @mock_status == :success
+        @stub = stub_request(:any, /braintree/).
+          to_return(body: nil, status: 200, headers: {})
       else
         super
       end
