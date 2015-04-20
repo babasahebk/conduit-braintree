@@ -7,7 +7,10 @@ module Conduit::Driver::Braintree
       attr_reader :json
 
       def initialize(response_body)
+        response_body ||= '{}'
         @json = MultiJson.load(response_body, symbolize_keys: true)
+      rescue
+        @json = {errors: ['Unable to parse response']}
       end
 
       def response_status
@@ -29,7 +32,7 @@ module Conduit::Driver::Braintree
         data = json
         path.split('/').map do |element|
           key = element.match(/\A\d+\Z/) ? element.to_i : element.to_sym
-          data = data[key]
+          data = data.nil? ? nil : data[key]
         end.last
       end
     end
