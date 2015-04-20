@@ -9,7 +9,7 @@ module Conduit::Driver::Braintree
       def initialize(response_body)
         response_body ||= '{}'
         @json = MultiJson.load(response_body, symbolize_keys: true)
-      rescue
+      rescue MultiJson::ParseError
         @json = {errors: ['Unable to parse response']}
       end
 
