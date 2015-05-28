@@ -6,7 +6,7 @@ module Conduit
 
       required_credentials :merchant_id, :private_key, :public_key
       required_attributes  :environment
-      optional_attributes  :mock_status
+      optional_attributes  :mock_status, :merchant_account_id
 
       action :create_customer
       action :find_customer

@@ -9,6 +9,7 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
 
   let(:options) do
     { merchant_id: 'hello-labs-1',
+      merchant_account_id: 'hello-labs-customer-1',
       private_key: 'hello-labs-ssh',
       public_key:  'hello-world',
       environment: :sandbox,

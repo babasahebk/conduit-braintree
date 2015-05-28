@@ -8,7 +8,6 @@ PATH
       webmock (~> 1.19.0)
 
 GEM
-  remote: https://ndJJ64w5T4xsxaU6DJJb@gem.fury.io/bqsoft/
   remote: https://rubygems.org/
   specs:
     actionmailer (4.1.6)
