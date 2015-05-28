@@ -4,7 +4,7 @@ require 'conduit/braintree/actions/base'
 module Conduit::Driver::Braintree
   class AuthorizeTransaction < Base
 
-    required_attributes :amount, :token
+    required_attributes :amount, :token, :merchant_account_id
 
     private
 
@@ -14,7 +14,8 @@ module Conduit::Driver::Braintree
     #
     def perform_request
       response = Braintree::Transaction.sale(amount: @options[:amount],
-                                             payment_method_token: @options[:token])
+                                             payment_method_token: @options[:token],
+                                             merchant_account_id: @options[:merchant_account_id])
       body = Conduit::Driver::Braintree::Json::Transaction.new(response).to_json
 
       parser = parser_class.new(body)
