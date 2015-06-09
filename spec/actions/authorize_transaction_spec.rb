@@ -40,5 +40,26 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
         should eql expected
       end
     end
+
+    context 'without a merchant_account_id' do
+      let(:options) do
+        { merchant_id: 'hello-labs-1',
+          private_key: 'hello-labs-ssh',
+          public_key:  'hello-world',
+          environment: :sandbox,
+          amount:      amount,
+          token:       'test-101',
+          mock_status: mock_status
+        }
+      end
+      let(:mock_status) { 'success' }
+
+      before do
+        expect(Braintree::Transaction).to receive(:sale).with(amount: options[:amount],
+          payment_method_token: options[:token]).and_call_original
+      end
+
+      its(:transaction_status) { should eql 'authorized' }
+    end
   end
 end
