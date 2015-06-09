@@ -16,7 +16,7 @@ module Conduit::Driver::Braintree
     def perform_request
       parameters = {amount: @options[:amount],
                     payment_method_token: @options[:token]}
-      parameters[:merchant_account_id] = @options[:merchant_account_id] if @options[:merchant_account_id]
+      parameters[:merchant_account_id] = @options[:merchant_account_id] if @options[:merchant_account_id] && !@options[:merchant_account_id].strip.empty?
 
       response = Braintree::Transaction.sale(parameters)
       body = Conduit::Driver::Braintree::Json::Transaction.new(response).to_json

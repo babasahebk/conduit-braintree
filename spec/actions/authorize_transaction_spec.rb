@@ -46,6 +46,7 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
         { merchant_id: 'hello-labs-1',
           private_key: 'hello-labs-ssh',
           public_key:  'hello-world',
+          merchant_account_id: ' ',
           environment: :sandbox,
           amount:      amount,
           token:       'test-101',
