@@ -4,14 +4,11 @@ module Conduit::Braintree::RequestMocker
   class DeleteCreditCard < Base
     def mock
       if @mock_status == :failure
-        @stub = stub_request(:any, /braintree/).
-          to_return(body: nil, status: 404, headers: {})
+        @status = 404
       elsif @mock_status == :success
-        @stub = stub_request(:any, /braintree/).
-          to_return(body: nil, status: 200, headers: {})
-      else
-        super
+        @status = 200
       end
+      super
     end
   end
 end

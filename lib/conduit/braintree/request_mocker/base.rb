@@ -1,11 +1,10 @@
 require 'erb'
 require 'tilt'
-require 'webmock'
+require 'artifice'
 require 'zlib'
 
 module Conduit::Braintree::RequestMocker
   class Base
-    include WebMock::API
 
     FIXTURE_PREFIX = "#{File.dirname(__FILE__)}/fixtures".freeze
 
@@ -16,36 +15,63 @@ module Conduit::Braintree::RequestMocker
     end
 
     def mock
-      @stub = stub_request(:any, /braintree/).
-        to_return(body: render_response, headers: {'Content-Encoding' => 'gzip'} )
+      Artifice.activate_with fake_braintree
     end
 
     def unmock
-      remove_request_stub(@stub) if @stub
-      @stub = nil
+      Artifice.deactivate
     end
 
     def with_mocking
-      mock and yield.tap { unmock }
+      mock
+      yield
+    ensure
+      unmock
     end
 
     private
 
-    def render_response
-      response_mock = MockHelpers.new(@options)
-      response = Tilt::ERBTemplate.new(fixture).
-        render(@base.view_context, mock: response_mock)
-      response.encode!('ASCII-8BIT')
+    def headers
+      { 'Content-Encoding' => 'gzip' }
+    end
 
+    def fake_braintree
+      ->(env) do
+        if env['HTTP_HOST'] =~ /braintree/
+          @status ||= \
+            case @mock_status
+            when :error
+              500
+            when :failure
+              response ? 422 : 404
+            else
+              200
+            end
+          [@status, headers, [response]]
+        else
+          Artifice.passthru!
+        end
+      end
+    end
+
+    def mocked_response
+      response_mock = MockHelpers.new(@options)
+      Tilt::ERBTemplate.new(fixture)
+        .render(@base.view_context, mock: response_mock)
+        .encode!('ASCII-8BIT')
+    end
+
+    def render_response
       f = StringIO.new('')
 
       gz = Zlib::GzipWriter.new(f)
-      gz.write(response)
-      gz.finish
+      gz.write(mocked_response)
 
       f.string
     rescue
       nil
+    ensure
+      gz && gz.finish
     end
 
     def action_name

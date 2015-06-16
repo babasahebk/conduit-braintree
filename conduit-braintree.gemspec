@@ -23,10 +23,11 @@ Gem::Specification.new do |s|
 
   # Dependencies
   #
-  s.add_dependency 'conduit',    '~> 0.6.0'
-  s.add_dependency 'multi_json', '~> 1.10.1'
-  s.add_dependency 'braintree',  '~> 2.29.0'
-  s.add_dependency 'webmock',    '~> 1.19.0'
+  s.add_dependency 'conduit',           '~> 0.6.0'
+  s.add_dependency 'multi_json',        '~> 1.10.1'
+  s.add_dependency 'braintree',         '~> 2.29.0'
+  s.add_dependency 'artifice',          '~> 0.6'
+  s.add_dependency 'artifice-passthru', '~> 0.1.1'
 
   # Development Dependencies
   #
