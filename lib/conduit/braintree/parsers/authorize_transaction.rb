@@ -19,6 +19,9 @@ module Conduit::Driver::Braintree
       object_path('transaction/status')
     end
 
+    attribute :message do
+      object_path('transaction/message')
+    end
   end
 end
 

@@ -38,5 +38,12 @@ describe Conduit::Driver::Braintree::SettleTransaction do
         should eql expected
       end
     end
+
+    context 'with a settlement failure' do
+      let(:mock_status)        { 'settlement_failure' }
+      it "returns a failure message" do
+        expect(subject.message).to eql "Settlement amount is too large."
+      end
+    end
   end
 end
