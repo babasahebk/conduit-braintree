@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api-error-response>
+  <errors>
+    <errors type="array"/>
+  </errors>
+  <params>
+    <transaction>
+      <amount>2002</amount>
+      <payment-method-token>8kv24g</payment-method-token>
+      <type>sale</type>
+    </transaction>
+  </params>
+  <message>Limit Exceeded</message>
+  <transaction>
+    <id>6x845p</id>
+    <status>processor_declined</status>
+    <type>sale</type>
+    <currency-iso-code>USD</currency-iso-code>
+    <amount>2002.00</amount>
+    <merchant-account-id>hellolabs</merchant-account-id>
+    <order-id nil="true"/>
+    <created-at type="datetime">2015-07-28T17:14:13Z</created-at>
+    <updated-at type="datetime">2015-07-28T17:14:13Z</updated-at>
+    <customer>
+      <id>hello-test</id>
+      <first-name>Corey</first-name>
+      <last-name>Purcell</last-name>
+      <company>Hello Labs</company>
+      <email>corey.purcell@hellolabs.com</email>
+      <website></website>
+      <phone></phone>
+      <fax></fax>
+    </customer>
+    <billing>
+      <id>kp</id>
+      <first-name nil="true"/>
+      <last-name nil="true"/>
+      <company nil="true"/>
+      <street-address nil="true"/>
+      <extended-address nil="true"/>
+      <locality nil="true"/>
+      <region nil="true"/>
+      <postal-code>94107</postal-code>
+      <country-name nil="true"/>
+      <country-code-alpha2 nil="true"/>
+      <country-code-alpha3 nil="true"/>
+      <country-code-numeric nil="true"/>
+    </billing>
+    <refund-id nil="true"/>
+    <refund-ids type="array"/>
+    <refunded-transaction-id nil="true"/>
+    <settlement-batch-id nil="true"/>
+    <shipping>
+      <id nil="true"/>
+      <first-name nil="true"/>
+      <last-name nil="true"/>
+      <company nil="true"/>
+      <street-address nil="true"/>
+      <extended-address nil="true"/>
+      <locality nil="true"/>
+      <region nil="true"/>
+      <postal-code nil="true"/>
+      <country-name nil="true"/>
+      <country-code-alpha2 nil="true"/>
+      <country-code-alpha3 nil="true"/>
+      <country-code-numeric nil="true"/>
+    </shipping>
+    <custom-fields/>
+    <avs-error-response-code nil="true"/>
+    <avs-postal-code-response-code>M</avs-postal-code-response-code>
+    <avs-street-address-response-code>I</avs-street-address-response-code>
+    <cvv-response-code>I</cvv-response-code>
+    <gateway-rejection-reason nil="true"/>
+    <processor-authorization-code nil="true"/>
+    <processor-response-code>2002</processor-response-code>
+    <processor-response-text>Limit Exceeded</processor-response-text>
+    <additional-processor-response>2002 : Limit Exceeded</additional-processor-response>
+    <voice-referral-number nil="true"/>
+    <purchase-order-number nil="true"/>
+    <tax-amount nil="true"/>
+    <tax-exempt type="boolean">false</tax-exempt>
+    <credit-card>
+      <token>8kv24g</token>
+      <bin>401288</bin>
+      <last-4>1881</last-4>
+      <card-type>Visa</card-type>
+      <expiration-month>12</expiration-month>
+      <expiration-year>2020</expiration-year>
+      <customer-location>US</customer-location>
+      <cardholder-name nil="true"/>
+      <image-url>https://assets.braintreegateway.com/payment_method_logo/visa.png?environment=sandbox</image-url>
+      <prepaid>No</prepaid>
+      <healthcare>Unknown</healthcare>
+      <debit>Unknown</debit>
+      <durbin-regulated>Unknown</durbin-regulated>
+      <commercial>Unknown</commercial>
+      <payroll>Unknown</payroll>
+      <issuing-bank>Unknown</issuing-bank>
+      <country-of-issuance>USA</country-of-issuance>
+      <product-id>Unknown</product-id>
+      <unique-number-identifier>95a2266e6ba3b8e765c6e266fc5030cf</unique-number-identifier>
+      <venmo-sdk type="boolean">false</venmo-sdk>
+    </credit-card>
+    <status-history type="array">
+      <status-event>
+        <timestamp type="datetime">2015-07-28T17:14:13Z</timestamp>
+        <status>processor_declined</status>
+        <amount>2002.00</amount>
+        <user>coreypurcell</user>
+        <transaction-source>api</transaction-source>
+      </status-event>
+    </status-history>
+    <plan-id nil="true"/>
+    <subscription-id nil="true"/>
+    <subscription>
+      <billing-period-end-date nil="true"/>
+      <billing-period-start-date nil="true"/>
+    </subscription>
+    <add-ons type="array"/>
+    <discounts type="array"/>
+    <descriptor>
+      <name nil="true"/>
+      <phone nil="true"/>
+      <url nil="true"/>
+    </descriptor>
+    <recurring type="boolean">false</recurring>
+    <channel nil="true"/>
+    <service-fee-amount nil="true"/>
+    <escrow-status nil="true"/>
+    <disbursement-details>
+      <disbursement-date nil="true"/>
+      <settlement-amount nil="true"/>
+      <settlement-currency-iso-code nil="true"/>
+      <settlement-currency-exchange-rate nil="true"/>
+      <funds-held nil="true"/>
+      <success nil="true"/>
+    </disbursement-details>
+    <disputes type="array"/>
+    <payment-instrument-type>credit_card</payment-instrument-type>
+    <processor-settlement-response-code></processor-settlement-response-code>
+    <processor-settlement-response-text></processor-settlement-response-text>
+    <three-d-secure-info nil="true"/>
+  </transaction>
+</api-error-response>

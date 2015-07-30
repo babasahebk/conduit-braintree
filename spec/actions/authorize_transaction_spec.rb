@@ -41,6 +41,20 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       end
     end
 
+    context 'with a processor failure' do
+      let(:mock_status)        { 'processor_failure' }
+      it "returns a failure message" do
+        expect(subject.message).to eql "Limit Exceeded"
+      end
+    end
+
+    context 'with a processor failure' do
+      let(:mock_status)        { 'gateway_failure' }
+      it "returns a failure message" do
+        expect(subject.message).to eql "Gateway Rejected: fraud"
+      end
+    end
+
     context 'without a merchant_account_id' do
       let(:options) do
         { merchant_id: 'hello-labs-1',

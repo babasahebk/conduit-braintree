@@ -15,9 +15,14 @@ module Conduit::Driver::Braintree
           attributes
 
         attr_names.inject({}) do |h, attr_name|
-          transaction_attr = attr_name.to_s.gsub(/transaction_/, '')
+          if attr_name =~ /transaction/
+            transaction_attr = attr_name.to_s.gsub(/transaction_/, '')
 
-          h.merge(transaction_attr => response.transaction.send(transaction_attr))
+            h.merge(transaction_attr => response.transaction.send(transaction_attr))
+          else
+            value = response.respond_to?(attr_name) ? response.send(attr_name) : nil
+            h.merge(attr_name.to_s => value)
+          end
         end
       end
     end
