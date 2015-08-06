@@ -4,8 +4,10 @@ require 'conduit/braintree/actions/base'
 module Conduit::Driver::Braintree
   class UpdateCreditCard < Base
 
-    required_attributes :token, :cardholder_name, :number, :cvv,
-                        :expiration_month, :expiration_year, :billing_address
+    # Required keys target updating an expired card
+    # Optional keys target updating typos
+    required_attributes :token, :cvv, :expiration_month, :expiration_year
+    optional_attributes :billing_address, :cardholder_name, :number
 
     private
 
