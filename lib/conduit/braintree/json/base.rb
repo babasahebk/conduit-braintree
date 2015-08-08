@@ -16,7 +16,7 @@ module Conduit::Driver::Braintree
 
       def response_options
         base_options.tap do |options|
-          options.merge!(item_options) unless options[:errors].any?
+          options.merge!(item_options) if successful
         end
       end
 
@@ -33,8 +33,15 @@ module Conduit::Driver::Braintree
           []
         end
 
-        { successful: response.respond_to?(:success?) ? response.success? : true,
-          errors:     errors }
+        { successful: successful, errors: errors, message: message }
+      end
+
+      def successful
+        response.respond_to?(:success?) ? response.success? : true
+      end
+
+      def message
+        response.respond_to?(:message) ? response.message : nil
       end
     end
   end

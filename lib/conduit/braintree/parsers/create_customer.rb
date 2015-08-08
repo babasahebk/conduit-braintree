@@ -35,5 +35,8 @@ module Conduit::Driver::Braintree
       object_path('customer/website')
     end
 
+    attribute :message do
+      object_path('message')
+    end
   end
 end

@@ -20,7 +20,7 @@ module Conduit::Driver::Braintree
     end
 
     attribute :message do
-      object_path('transaction/message')
+      object_path('message')
     end
   end
 end

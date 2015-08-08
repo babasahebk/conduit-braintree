@@ -14,6 +14,8 @@ module Conduit::Driver::Braintree
         attr_names = Conduit::Driver::Braintree::CreateCreditCard::Parser.attributes
 
         attr_names.inject({}) do |h, attr_name|
+          next h if attr_name == :message
+
           if attr_name == :last_four
             h.merge(attr_name => response.credit_card.last_4)
           elsif attr_name == :customer_id
