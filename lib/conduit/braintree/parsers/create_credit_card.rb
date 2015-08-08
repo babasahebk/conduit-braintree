@@ -30,5 +30,9 @@ module Conduit::Driver::Braintree
     attribute :bin do
       object_path('credit_card/bin')
     end
+
+    attribute :message do
+      object_path('message')
+    end
   end
 end

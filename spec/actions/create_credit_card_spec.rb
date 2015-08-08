@@ -36,6 +36,7 @@ describe Conduit::Driver::Braintree::CreateCreditCard do
       its(:bin)               { should eql '411111' }
       its(:last_four)         { should eql '1111' }
       its(:token)             { should_not be_empty }
+      its(:message)           { should be_nil }
     end
 
     context 'with a failure authorizing' do
