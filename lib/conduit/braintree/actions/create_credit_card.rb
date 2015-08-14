@@ -7,6 +7,8 @@ module Conduit::Driver::Braintree
     required_attributes :cardholder_name, :number, :cvv, :expiration_month,
                         :expiration_year, :billing_address, :customer_id
 
+    optional_attributes :verify_card
+
     private
 
     # Required entry method, the main driver
@@ -22,6 +24,20 @@ module Conduit::Driver::Braintree
 
     rescue Braintree::BraintreeError => error
       report_braintree_exceptions(error)
+    end
+
+    # Request verification when the card is
+    # stored, using the merchant account id
+    # if one is provided
+    #
+    def whitelist_options
+      @options[:options] = {}.tap do |h|
+        h[:verify_card] = @options.fetch(:verify_card, true)
+        @options.delete(:verify_card)
+        h[:verification_merchant_account_id] = @options[:merchant_account_id] \
+          if @options.key?(:merchant_account_id)
+      end
+      super
     end
   end
 end
