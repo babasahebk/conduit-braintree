@@ -1,9 +1,9 @@
 <%= MultiJson.dump({
   CardholderName: cardholder_name,
-  Number: '[FILTERED]',
   Cvv: '[FILTERED]',
   ExpirationMonth: expiration_month,
   ExpirationYear: expiration_year,
   BillingAddress: billing_address,
-  Token: token
+  Token: token,
+  Options: options
   }) %>

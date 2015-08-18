@@ -27,6 +27,21 @@ module Conduit::Driver::Braintree
     rescue Braintree::BraintreeError => error
       report_braintree_exceptions(error)
     end
+
+    # Request verification when the card is
+    # stored, using the merchant account id
+    # if one is provided
+    #
+    def whitelist_options
+      @options[:options] ||= {}.tap do |h|
+        h[:verify_card] = @options.fetch(:verify_card, true)
+        @options.delete(:verify_card)
+        if @options.key?(:verification_merchant_account_id)
+          h[:verification_merchant_account_id] = @options.delete(:verification_merchant_account_id)
+        end
+      end
+      super
+    end
   end
 end
 
