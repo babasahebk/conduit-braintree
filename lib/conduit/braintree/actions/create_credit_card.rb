@@ -7,7 +7,7 @@ module Conduit::Driver::Braintree
     required_attributes :cardholder_name, :number, :cvv, :expiration_month,
                         :expiration_year, :billing_address, :customer_id
 
-    optional_attributes :verify_card
+    optional_attributes :verify_card, :verification_merchant_account_id
 
     private
 
@@ -31,11 +31,12 @@ module Conduit::Driver::Braintree
     # if one is provided
     #
     def whitelist_options
-      @options[:options] = {}.tap do |h|
+      @options[:options] ||= {}.tap do |h|
         h[:verify_card] = @options.fetch(:verify_card, true)
         @options.delete(:verify_card)
-        h[:verification_merchant_account_id] = @options[:merchant_account_id] \
-          if @options.key?(:merchant_account_id)
+        if @options.key?(:verification_merchant_account_id)
+          h[:verification_merchant_account_id] = @options.delete(:verification_merchant_account_id)
+        end
       end
       super
     end

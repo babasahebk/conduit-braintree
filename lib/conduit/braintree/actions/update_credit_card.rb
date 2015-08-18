@@ -7,7 +7,8 @@ module Conduit::Driver::Braintree
     # Required keys target updating an expired card
     # Optional keys target updating typos
     required_attributes :token, :cvv, :expiration_month, :expiration_year
-    optional_attributes :billing_address, :cardholder_name, :number
+    optional_attributes :billing_address, :cardholder_name, :number,
+                        :verify_card, :verification_merchant_account_id
 
     private
 
@@ -26,6 +27,21 @@ module Conduit::Driver::Braintree
       raise(Conduit::NotFoundError, error.message)
     rescue Braintree::BraintreeError => error
       report_braintree_exceptions(error)
+    end
+
+    # Request verification when the card is
+    # stored, using the merchant account id
+    # if one is provided
+    #
+    def whitelist_options
+      @options[:options] ||= {}.tap do |h|
+        h[:verify_card] = @options.fetch(:verify_card, true)
+        @options.delete(:verify_card)
+        if @options.key?(:verification_merchant_account_id)
+          h[:verification_merchant_account_id] = @options.delete(:verification_merchant_account_id)
+        end
+      end
+      super
     end
   end
 end

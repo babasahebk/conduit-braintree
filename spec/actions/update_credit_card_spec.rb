@@ -19,7 +19,8 @@ describe Conduit::Driver::Braintree::UpdateCreditCard do
       cvv:              '',
       expiration_month: 12,
       expiration_year:  2099,
-      billing_address:  {}
+      billing_address:  {},
+      verification_merchant_account_id: 'TESTIT'
     }
   end
 
