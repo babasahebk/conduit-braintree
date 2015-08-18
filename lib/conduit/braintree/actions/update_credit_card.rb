@@ -7,7 +7,8 @@ module Conduit::Driver::Braintree
     # Required keys target updating an expired card
     # Optional keys target updating typos
     required_attributes :token, :cvv, :expiration_month, :expiration_year
-    optional_attributes :billing_address, :cardholder_name, :number
+    optional_attributes :billing_address, :cardholder_name, :number,
+                        :verify_card, :verification_merchant_account_id
 
     private
 
