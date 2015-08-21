@@ -1,5 +1,3 @@
-require 'active_support/core_ext/object/try'
-
 module Conduit::Driver::Braintree
   module Json
     module Verification
@@ -16,14 +14,15 @@ module Conduit::Driver::Braintree
       private
 
       def verification_attributes
+        return {} if verification.nil?
         VERIFICATION_ATTRIBUTES.inject({}) do |h, attr_name|
           if attr_name == :verification_code
-            h.merge(attr_name => verification.try(:status))
+            h.merge(attr_name => verification.status)
           elsif RESPONSE_CODE_ATTRIBUTES.include?(attr_name)
-            response_code = verification.try(attr_name)
+            response_code = verification.send(attr_name)
             h.merge(attr_name => translate_response_code(response_code))
           elsif verification.respond_to?(attr_name)
-            h.merge(attr_name => verification.try(attr_name))
+            h.merge(attr_name => verification.send(attr_name))
           else
             h.merge(attr_name => nil)
           end

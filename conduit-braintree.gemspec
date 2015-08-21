@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'braintree',         '~> 2.29'
   s.add_dependency 'artifice',          '~> 0.6'
   s.add_dependency 'artifice-passthru', '~> 0.1.1'
-  s.add_dependency 'activesupport',     '>= 3.0.0'
 
   # Development Dependencies
   #
