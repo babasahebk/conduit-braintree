@@ -3,9 +3,8 @@ require 'conduit/braintree/json/base'
 module Conduit::Driver::Braintree
   module Json
     class CreditCard < Base
-
       def item_options
-        { credit_card: credit_card_attributes }
+        { credit_card: credit_card_attributes.merge(verification_attributes) }
       end
 
       private
@@ -20,8 +19,10 @@ module Conduit::Driver::Braintree
             h.merge(attr_name => response.credit_card.last_4)
           elsif attr_name == :customer_id
             h.merge(attr_name => response.credit_card.id)
-          else
+          elsif response.credit_card.respond_to?(attr_name)
             h.merge(attr_name => response.credit_card.send(attr_name))
+          else
+            h.merge(attr_name => nil)
           end
         end
       end

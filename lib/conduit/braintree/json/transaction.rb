@@ -3,9 +3,10 @@ require 'conduit/braintree/json/base'
 module Conduit::Driver::Braintree
   module Json
     class Transaction < Base
+      include Verification
 
       def item_options
-        { transaction: transaction_attributes }
+        { transaction: transaction_attributes.merge(verification_attributes) }
       end
 
       private
