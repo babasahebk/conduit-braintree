@@ -1,6 +1,9 @@
+require 'conduit/braintree/json/verification'
+
 module Conduit::Driver::Braintree
   module Json
     class Base
+      include Verification
 
       attr_reader :response
 
@@ -17,6 +20,7 @@ module Conduit::Driver::Braintree
       def response_options
         base_options.tap do |options|
           options.merge!(item_options) if successful
+          options.merge!(verification_attributes) unless successful
         end
       end
 
