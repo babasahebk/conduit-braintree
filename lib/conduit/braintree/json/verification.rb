@@ -41,12 +41,12 @@ module Conduit::Driver::Braintree
       end
 
       def verification
-        if response.respond_to?(:transaction)
+        if response.respond_to?(:credit_card_verification)
+          response.credit_card_verification
+        elsif response.respond_to?(:transaction)
           response.transaction
         elsif response.respond_to?(:credit_card)
           response.credit_card.verification
-        elsif response.respond_to?(:credit_card_verification)
-          response.credit_card_verification
         end
       end
     end

@@ -16,10 +16,10 @@ describe Conduit::Driver::Braintree::CreateCreditCard do
       customer_id:      'k4rs72_1',
       cardholder_name:  'John Doe',
       number:           '4111111111111111',
-      cvv:              '',
+      cvv:              '123',
       expiration_month: 12,
       expiration_year:  2099,
-      billing_address:  {},
+      billing_address:  { street_address: '123 Main St' },
       verification_merchant_account_id: 'TESTIT'
     }
   end

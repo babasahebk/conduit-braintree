@@ -16,10 +16,10 @@ describe Conduit::Driver::Braintree::UpdateCreditCard do
       token:            '24sss2',
       cardholder_name:  'John Doe',
       number:           '4111111111111111',
-      cvv:              '',
+      cvv:              '123',
       expiration_month: 12,
       expiration_year:  2099,
-      billing_address:  {},
+      billing_address:  { street_address: '123 Main St' },
       verification_merchant_account_id: 'TESTIT'
     }
   end
@@ -31,7 +31,8 @@ describe Conduit::Driver::Braintree::UpdateCreditCard do
       environment:      :sandbox,
       mock_status:      mock_status,
       token:            '24sss2',
-      cvv:              '',
+      cvv:              '123',
+      billing_address:  { postal_code: '12345' },
       expiration_month: 12,
       expiration_year:  2099
     }
