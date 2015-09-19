@@ -32,35 +32,35 @@ module Conduit::Driver::Braintree
     end
 
     attribute :avs_error_response_code do
-      object_path('credit_card/avs_error_response_code')
+      object_path('avs_error_response_code')
     end
 
     attribute :avs_postal_code_response_code do
-      object_path('credit_card/avs_postal_code_response_code')
+      object_path('avs_postal_code_response_code')
     end
 
     attribute :avs_street_address_response_code do
-      object_path('credit_card/avs_street_address_response_code')
+      object_path('avs_street_address_response_code')
     end
 
     attribute :cvv_response_code do
-      object_path('credit_card/cvv_response_code')
+      object_path('cvv_response_code')
     end
 
     attribute :gateway_rejection_reason do
-      object_path('credit_card/gateway_rejection_reason')
+      object_path('gateway_rejection_reason')
     end
 
     attribute :processor_response_code do
-      object_path('credit_card/processor_response_code')
+      object_path('processor_response_code')
     end
 
     attribute :processor_response_text do
-      object_path('credit_card/processor_response_text')
+      object_path('processor_response_text')
     end
 
     attribute :verification_status do
-      object_path('credit_card/verification_status')
+      object_path('verification_status')
     end
 
     attribute :message do
