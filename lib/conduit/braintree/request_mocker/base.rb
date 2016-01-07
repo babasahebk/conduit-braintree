@@ -1,7 +1,7 @@
 require 'erb'
 require 'tilt'
-require 'artifice'
 require 'zlib'
+require 'webmock'
 
 module Conduit::Braintree::RequestMocker
   class Base
@@ -15,11 +15,11 @@ module Conduit::Braintree::RequestMocker
     end
 
     def mock
-      Artifice.activate_with fake_braintree
+      @stub = set_webmock
     end
 
     def unmock
-      Artifice.deactivate
+      @stub && WebMock.remove_request_stub(@stub)
     end
 
     def with_mocking
@@ -35,11 +35,9 @@ module Conduit::Braintree::RequestMocker
       { 'Content-Encoding' => 'gzip' }
     end
 
-    def fake_braintree
-      ->(env) do
-        if env['HTTP_HOST'] =~ /braintree/
-          @status ||= \
-            case @mock_status
+    def set_webmock
+      WebMock.stub_request(:any, /.*braintree.*/).to_return do |request|
+        @status ||= case @mock_status
             when :error
               500
             when :failure
@@ -47,10 +45,7 @@ module Conduit::Braintree::RequestMocker
             else
               200
             end
-          [@status, headers, [response]]
-        else
-          Artifice.passthru!
-        end
+        {status: @status, headers: headers, body: response}
       end
     end
 
