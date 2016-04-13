@@ -69,9 +69,10 @@ describe Conduit::Driver::Braintree::UpdateCreditCard do
       let(:mock_status)        { 'failure' }
       its(:response_status)    { should eql mock_status }
       its(:errors) do
-        expected = {
-          base: ["Duplicate card exists (81724)"]
-        }
+        expected = [
+          Conduit::Error.new(attribute: :base,
+            message: "Duplicate card exists (81724)")
+        ]
         should eql expected
       end
     end
