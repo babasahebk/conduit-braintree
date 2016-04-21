@@ -22,6 +22,7 @@ describe Conduit::Driver::Braintree::FindTransaction do
     context 'with a successful authorization' do
       let(:mock_status)        { 'success' }
       its(:response_status)    { should eql mock_status }
+      its(:transaction_status) { should eql 'settled' }
     end
   end
 end
