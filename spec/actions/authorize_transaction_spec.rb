@@ -56,6 +56,14 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       end
     end
 
+    context 'with processor fraud' do
+      let(:mock_status)        { 'fraud' }
+      it "returns failure message" do
+        expect(subject.response_errors).to_not be_empty
+        expect(subject.response_errors.map(&:message).first).to eql "Gateway Rejected: fraud"
+      end
+    end
+
     context 'without a merchant_account_id' do
       let(:options) do
         { merchant_id: 'hello-labs-1',
