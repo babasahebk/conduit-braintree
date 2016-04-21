@@ -24,7 +24,7 @@ describe Conduit::Driver::Braintree::Parser::Base do
       it { should_not be_empty }
       it 'should have an error indicating that it could not be parsed' do
         instance = described_class.new(response_body)
-        expect(instance.errors).to include 'Unable to parse response'
+        expect(instance.errors.map(&:message)).to include 'Unable to parse response'
       end
     end
   end
@@ -54,7 +54,7 @@ describe Conduit::Driver::Braintree::Parser::Base do
     context 'when the errors key points to an array' do
       let(:response_body) { '{"errors":["You bad"],"foo":{"bar": "baz"}}' }
       its(:errors) { should_not be_empty }
-      its(:errors) { should eql ["You bad"] }
+      its(:errors) { should eql [Conduit::Error.new(message: "You bad")] }
     end
   end
 

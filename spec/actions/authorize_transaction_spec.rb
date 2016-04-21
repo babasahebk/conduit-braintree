@@ -33,9 +33,10 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       let(:mock_status)        { 'failure' }
       its(:response_status)    { should eql mock_status }
       its(:errors) do
-        expected = {
-          merchant_id: ["Invalid verification merchant account ID (917218)"]
-        }
+        expected = [
+          Conduit::Error.new(attribute: :merchant_id,
+            message: "Invalid verification merchant account ID (917218)")
+        ]
 
         should eql expected
       end
@@ -52,6 +53,14 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       let(:mock_status)        { 'gateway_failure' }
       it "returns a failure message" do
         expect(subject.message).to eql "Gateway Rejected: fraud"
+      end
+    end
+
+    context 'with processor fraud' do
+      let(:mock_status)        { 'fraud' }
+      it "returns failure message" do
+        expect(subject.response_errors).to_not be_empty
+        expect(subject.response_errors.map(&:message).first).to eql "Gateway Rejected: fraud"
       end
     end
 

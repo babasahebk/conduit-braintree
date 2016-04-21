@@ -32,9 +32,10 @@ describe Conduit::Driver::Braintree::RefundTransaction do
       let(:mock_status)        { 'failure' }
       its(:response_status)    { should eql mock_status }
       its(:errors) do
-        expected = {
-          merchant_id: ["Invalid verification merchant account ID (917218)"]
-        }
+        expected = [
+          Conduit::Error.new(attribute: :merchant_id,
+            message: "Invalid verification merchant account ID (917218)")
+        ]
         should eql expected
       end
     end

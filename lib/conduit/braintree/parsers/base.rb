@@ -22,7 +22,7 @@ module Conduit::Driver::Braintree
       # If no errors were reported, returns an empty hash
       #
       def errors
-        @errors ||= object_path('errors') || []
+        @errors ||= normalized_errors
       end
 
       # Alias errors as required response_errors method
@@ -34,6 +34,33 @@ module Conduit::Driver::Braintree
           key = element.match(/\A\d+\Z/) ? element.to_i : element.to_sym
           data = data.nil? ? nil : data[key]
         end.last
+      end
+
+      private
+
+      def normalized_errors
+        return [] if object_path('successful')
+
+        # if it's not successful, sometimes the message is just in the message attribute
+        errors = []
+        errors << Conduit::Error.new(message: object_path('message')) if object_path('message')
+
+        errors + normalized_error_objects
+      end
+
+      def normalized_error_objects
+        return [] unless object_path('errors')
+        object_path('errors').map do |attribute, error_messages|
+          if error_messages.nil?
+            # if the error_messages is nil, the attribute is just a message
+            Conduit::Error.new(message: attribute)
+          else
+            # error is array of messages, explode into unique errors.
+            error_messages.map do |message|
+              Conduit::Error.new(message: message, attribute: attribute)
+            end
+          end
+        end.flatten
       end
     end
   end

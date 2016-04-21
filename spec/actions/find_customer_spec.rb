@@ -32,7 +32,10 @@ describe Conduit::Driver::Braintree::FindCustomer do
       let(:mock_status)        { 'failure' }
       its(:response_status)    { should eql mock_status }
       its(:errors) do
-        expected = { base: ["Failed to find resource with identifier f2b5gb_1 (error)"] }
+        expected = [
+          Conduit::Error.new(attribute: :base,
+            message: "Failed to find resource with identifier f2b5gb_1 (error)")
+        ]
         should eql expected
       end
     end
