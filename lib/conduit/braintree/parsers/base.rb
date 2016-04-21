@@ -39,10 +39,18 @@ module Conduit::Driver::Braintree
       private
 
       def normalized_errors
-        response_errors = object_path('errors')
-        return [] unless response_errors
+        return [] if object_path('successful')
 
-        response_errors.map do |attribute, error_messages|
+        # if it's not successful, sometimes the message is just in the message attribute
+        errors = []
+        errors << Conduit::Error.new(message: object_path('message')) if object_path('message')
+
+        errors + normalized_error_objects
+      end
+
+      def normalized_error_objects
+        return [] unless object_path('errors')
+        object_path('errors').map do |attribute, error_messages|
           if error_messages.nil?
             # if the error_messages is nil, the attribute is just a message
             Conduit::Error.new(message: attribute)
