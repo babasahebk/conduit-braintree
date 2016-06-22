@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'braintree'
 require 'conduit/braintree'
 
-describe Conduit::Driver::Braintree::FindCustomer do
+describe Conduit::Driver::Braintree::CreateCustomer do
   subject do
     described_class.new(options).perform.parser
   end
@@ -13,7 +13,9 @@ describe Conduit::Driver::Braintree::FindCustomer do
       public_key:       'hello-world',
       environment:      :sandbox,
       mock_status:      mock_status,
-      customer_id:      'f2b5gb_1'
+      customer_id:      'f2b5gb_1',
+      first_name:       'test',
+      last_name:        'tester'
     }
   end
 
@@ -25,11 +27,30 @@ describe Conduit::Driver::Braintree::FindCustomer do
       its(:response_status)   { should eql mock_status }
 
       context 'when customer id is provided' do
-        its(:customer_id)       { should eql options[:customer_id] }
+        its(:customer_id) { should eql options[:customer_id] }
       end
 
       context 'when customer id is not provided' do
-        its(:customer_id)       { should_not be_empty }
+        its(:customer_id) { should_not be_empty }
+      end
+    end
+
+    context "with device_data" do
+      let(:mock_status) { 'success' }
+      let(:options) do
+        { merchant_id:      'hello-labs-1',
+          private_key:      'hello-labs-ssh',
+          public_key:       'hello-world',
+          environment:      :sandbox,
+          mock_status:      mock_status,
+          customer_id:      'f2b5gb_1',
+          device_data:      "test"
+        }
+      end
+
+      it "should send device data" do
+        expect(Braintree::Customer).to receive(:create).with(device_data: "test", id: "f2b5gb_1").and_call_original
+        expect(subject.customer_id).to eql options[:customer_id]
       end
     end
 
@@ -38,8 +59,8 @@ describe Conduit::Driver::Braintree::FindCustomer do
       its(:response_status)    { should eql mock_status }
       its(:errors) do
         expected = [
-          Conduit::Error.new(attribute: :base,
-            message: "Failed to find resource with identifier f2b5gb_1 (error)")
+          Conduit::Error.new(attribute: :merchant_id,
+            message: "Invalid verification merchant account ID (917218)")
         ]
         should eql expected
       end
