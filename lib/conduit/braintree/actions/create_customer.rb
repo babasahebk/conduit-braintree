@@ -6,13 +6,14 @@ module Conduit::Driver::Braintree
 
     required_attributes :customer_id
     optional_attributes :first_name, :last_name, :company, :email, :phone, :fax,
-                        :website
+                        :website, :device_data
 
     private
 
     def perform_request
-      create_options = @options.except(:customer_id)
+      create_options = whitelist_options.except(:customer_id)
       create_options.merge!(id: @options[:customer_id])
+      create_options[:device_data] = @options[:device_data] unless @options[:device_data].blank?
 
       response = Braintree::Customer.create(create_options)
       body     = Conduit::Driver::Braintree::Json::Customer.new(response).to_json

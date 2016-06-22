@@ -64,6 +64,28 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       end
     end
 
+    context "with device_data" do
+      let(:mock_status) { 'success' }
+      let(:options) do
+        { merchant_id: 'hello-labs-1',
+          private_key: 'hello-labs-ssh',
+          public_key:  'hello-world',
+          merchant_account_id: ' ',
+          environment: :sandbox,
+          amount:      amount,
+          token:       'test-101',
+          mock_status: mock_status,
+          device_data: "test"
+        }
+      end
+
+      it "should send device data" do
+        expect(Braintree::Transaction).to receive(:sale).with(amount: options[:amount],
+          payment_method_token: options[:token], device_data: "test").and_call_original
+        expect(subject.transaction_status).to eql "authorized"
+      end
+    end
+
     context 'without a merchant_account_id' do
       let(:options) do
         { merchant_id: 'hello-labs-1',
