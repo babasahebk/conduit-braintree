@@ -62,7 +62,7 @@ module Conduit::Driver::Braintree
     private
 
     def whitelist_options
-      @options.except(:mock_status)
+      @options.slice(*attributes).except(:mock_status)
     end
 
     def configure_braintree

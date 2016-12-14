@@ -35,6 +35,32 @@ describe Conduit::Driver::Braintree::CreateCustomer do
       end
     end
 
+    context "with extra options" do
+      let(:options) do
+        { merchant_id:      'hello-labs-1',
+          private_key:      'hello-labs-ssh',
+          public_key:       'hello-world',
+          environment:      :sandbox,
+          mock_status:      "success",
+          customer_id:      'f2b5gb_1',
+          first_name:       'test',
+          last_name:        'tester',
+          archived:         false
+        }
+      end
+
+      it "only passes defined attributes" do
+        expect(Braintree::Customer).to receive(:create).with(
+          hash_including(
+            first_name:       'test',
+            last_name:        'tester',
+            id:               'f2b5gb_1'
+          )
+        ).and_call_original
+        described_class.new(options).perform
+      end
+    end
+
     context "with device_data" do
       let(:mock_status) { 'success' }
       let(:options) do
