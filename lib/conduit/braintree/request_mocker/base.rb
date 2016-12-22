@@ -45,7 +45,7 @@ module Conduit::Braintree::RequestMocker
             else
               200
             end
-        {status: @status, headers: headers, body: response}
+        {status: @status, headers: headers, body: response || render_empty_response}
       end
     end
 
@@ -67,6 +67,15 @@ module Conduit::Braintree::RequestMocker
       nil
     ensure
       gz && gz.finish
+    end
+
+    def render_empty_response
+      f = StringIO.new("")
+      gz = Zlib::GzipWriter.new(f)
+      gz.write("")
+      f.string
+    ensure
+      gz && gz.finish      
     end
 
     def action_name
