@@ -17,10 +17,6 @@ Braintree::Configuration.logger.level = Logger::WARN
 # Rspec Configuration
 #
 RSpec.configure do |config|
-  config.before(:suite) do
-    Excon.defaults[:mock] = true
-  end
-
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]
   end

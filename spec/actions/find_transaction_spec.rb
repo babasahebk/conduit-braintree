@@ -24,5 +24,18 @@ describe Conduit::Driver::Braintree::FindTransaction do
       its(:response_status)    { should eql mock_status }
       its(:transaction_status) { should eql 'settled' }
     end
+
+    context "with a failure" do
+      let(:mock_status)     { 'failure' }
+      its(:response_status) { should eql mock_status }
+
+      it "should have errors" do
+        expected = [
+          Conduit::Error.new(attribute: :base,
+            message: "Failed to find resource with identifier  (error)")
+        ]
+        expect(subject.errors).to eql expected
+      end
+    end
   end
 end
