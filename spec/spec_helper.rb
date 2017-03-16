@@ -13,6 +13,8 @@ end
 
 Braintree::Configuration.logger.level = Logger::WARN
 
+WebMock.disable_net_connect!(allow: %w(codeclimate.com))
+
 # Rspec Configuration
 #
 RSpec.configure do |config|
