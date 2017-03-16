@@ -1,14 +1,13 @@
 # Require Files
 #
-require 'braintree'
-require 'conduit/braintree'
-require 'conduit/braintree/driver'
-require 'rspec/its'
+require "conduit/braintree"
+require "rspec/its"
+require "webmock/rspec"
 include Conduit::Driver::Braintree
 
 # Load all of the _spec.rb files
 #
-Dir[File.join(File.dirname(__FILE__), 'support', '**', '*.rb')].each do |f|
+Dir[File.join(File.dirname(__FILE__), "support", "**", "*.rb")].each do |f|
   require f
 end
 
