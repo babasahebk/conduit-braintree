@@ -1,9 +1,8 @@
-require 'conduit/braintree/json/credit_card'
-require 'conduit/braintree/actions/base'
+require "conduit/braintree/json/credit_card"
+require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class UpdateCreditCard < Base
-
     # Required keys target updating an expired card
     # Optional keys target updating typos
     required_attributes :token, :cvv, :expiration_month, :expiration_year

@@ -1,9 +1,8 @@
-require 'conduit/braintree/json/transaction'
-require 'conduit/braintree/actions/base'
+require "conduit/braintree/json/transaction"
+require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class AuthorizeTransaction < Base
-
     required_attributes :amount, :token
     optional_attributes :merchant_account_id, :device_data
 
@@ -14,8 +13,8 @@ module Conduit::Driver::Braintree
     # request.
     #
     def perform_request
-      parameters = {amount: @options[:amount],
-                    payment_method_token: @options[:token]}
+      parameters = { amount: @options[:amount],
+                    payment_method_token: @options[:token] }
       parameters[:merchant_account_id] = @options[:merchant_account_id] unless @options[:merchant_account_id].blank?
       parameters[:device_data] = @options[:device_data] unless @options[:device_data].blank?
 

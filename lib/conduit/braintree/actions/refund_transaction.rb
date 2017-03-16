@@ -1,9 +1,8 @@
-require 'conduit/braintree/json/transaction'
-require 'conduit/braintree/actions/base'
+require "conduit/braintree/json/transaction"
+require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class RefundTransaction < Base
-
     required_attributes :reference_number, :amount
 
     private
@@ -14,7 +13,8 @@ module Conduit::Driver::Braintree
     #
     def perform_request
       response = Braintree::Transaction.refund(
-                   @options[:reference_number], @options[:amount])
+        @options[:reference_number], @options[:amount]
+      )
       body = Conduit::Driver::Braintree::Json::Transaction.new(response).to_json
 
       parser = parser_class.new(body)

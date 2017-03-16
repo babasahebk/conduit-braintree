@@ -3,7 +3,7 @@ module Conduit::Driver::Braintree
     module Verification
       RESPONSE_CODE_ATTRIBUTES = %i(avs_postal_code_response_code
                                     avs_street_address_response_code
-                                    cvv_response_code)
+                                    cvv_response_code).freeze
 
       VERIFICATION_ATTRIBUTES  = %i(avs_error_response_code
                                     gateway_rejection_reason
@@ -31,11 +31,11 @@ module Conduit::Driver::Braintree
 
       def translate_response_code(response_code)
         case response_code
-        when 'M' then 'Matches'
-        when 'N' then 'Does not match'
-        when 'U' then 'Not verified'
-        when 'I' then 'Not provided'
-        when 'A' then 'Not applicable'
+        when "M" then "Matches"
+        when "N" then "Does not match"
+        when "U" then "Not verified"
+        when "I" then "Not provided"
+        when "A" then "Not applicable"
         else response_code
         end
       end

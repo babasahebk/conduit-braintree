@@ -1,4 +1,4 @@
-require 'conduit/braintree/json/verification'
+require "conduit/braintree/json/verification"
 
 module Conduit::Driver::Braintree
   module Json

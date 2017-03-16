@@ -1,9 +1,8 @@
-require 'conduit/braintree/json/transaction'
-require 'conduit/braintree/actions/base'
+require "conduit/braintree/json/transaction"
+require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class VoidTransaction < Base
-
     required_attributes :reference_number
 
     private

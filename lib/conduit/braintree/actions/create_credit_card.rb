@@ -1,9 +1,8 @@
-require 'conduit/braintree/json/credit_card'
-require 'conduit/braintree/actions/base'
+require "conduit/braintree/json/credit_card"
+require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class CreateCreditCard < Base
-
     required_attributes :cardholder_name, :number, :cvv, :expiration_month,
                         :expiration_year, :billing_address, :customer_id
 

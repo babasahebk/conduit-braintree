@@ -1,8 +1,8 @@
-require 'spec_helper'
+require "spec_helper"
 
-shared_examples_for 'a conduit-braintree action' do |options|
+shared_examples_for "a conduit-braintree action" do |options|
   braintree_keys = Conduit::Driver::Braintree.credentials +
-    Conduit::Driver::Braintree.required_attributes
+                   Conduit::Driver::Braintree.required_attributes
 
   braintree_keys.each do |key|
     it "should configure the Braintree #{key}" do

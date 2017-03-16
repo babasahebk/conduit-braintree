@@ -18,7 +18,6 @@ module Conduit
       action :settle_transaction
       action :refund_transaction
       action :find_transaction
-
     end
   end
 end

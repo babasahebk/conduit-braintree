@@ -1,9 +1,8 @@
-require 'conduit/braintree/json/base'
+require "conduit/braintree/json/base"
 
 module Conduit::Driver::Braintree
   module Json
     class Customer < Base
-
       def item_options
         { customer: customer_attributes }
       end

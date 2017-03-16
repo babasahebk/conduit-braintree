@@ -4,7 +4,7 @@ module Conduit
     # the Conduit::Driver::Braintree
     module Configuration
       class << self
-        def configure(&block)
+        def configure
           yield self
         end
       end

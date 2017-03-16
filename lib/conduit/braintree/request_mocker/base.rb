@@ -1,11 +1,10 @@
-require 'erb'
-require 'tilt'
-require 'zlib'
-require 'webmock'
+require "erb"
+require "tilt"
+require "zlib"
+require "webmock"
 
 module Conduit::Braintree::RequestMocker
   class Base
-
     FIXTURE_PREFIX = "#{File.dirname(__FILE__)}/fixtures".freeze
 
     def initialize(base, options = nil)
@@ -31,33 +30,35 @@ module Conduit::Braintree::RequestMocker
 
     private
 
-    def headers
-      { 'Content-Encoding' => 'gzip' }
-    end
-
     def set_webmock
-      WebMock.stub_request(:any, /.*braintree.*/).to_return do |request|
-        @status ||= case @mock_status
-            when :error
-              500
-            when :failure
-              response ? 422 : 404
-            else
-              200
-            end
-        {status: @status, headers: headers, body: response || render_empty_response}
+      WebMock.stub_request(:any, /.*braintree.*/).to_return do
+        @status ||=
+          case @mock_status
+          when :error
+            500
+          when :failure
+            response ? 422 : 404
+          else
+            200
+          end
+
+        {
+          status: @status,
+          headers: { 'Content-Encoding' => 'gzip' },
+          body: response || render_empty_response
+        }
       end
     end
 
     def mocked_response
       response_mock = MockHelpers.new(@options)
       Tilt::ERBTemplate.new(fixture)
-        .render(@base.view_context, mock: response_mock)
-        .encode!('ASCII-8BIT')
+                       .render(@base.view_context, mock: response_mock)
+                       .encode!("ASCII-8BIT")
     end
 
     def render_response
-      f = StringIO.new('')
+      f = StringIO.new("")
 
       gz = Zlib::GzipWriter.new(f)
       gz.write(mocked_response)
@@ -75,7 +76,7 @@ module Conduit::Braintree::RequestMocker
       gz.write("")
       f.string
     ensure
-      gz && gz.finish      
+      gz && gz.finish
     end
 
     def action_name
@@ -88,8 +89,7 @@ module Conduit::Braintree::RequestMocker
 
     def response
       if @mock_status
-        return error_response if @mock_status == :error
-        render_response
+        @mock_status == :error ? error_response : render_response
       else
         raise(ArgumentError, "Mock status must be set (:success, :failure, or :error for example)")
       end
@@ -102,7 +102,7 @@ module Conduit::Braintree::RequestMocker
 end
 
 class MockHelpers
-  TEST_CARD_NUMBER = '4111111111111111'
+  TEST_CARD_NUMBER = "4111111111111111".freeze
 
   def initialize(options = {})
     @options = options

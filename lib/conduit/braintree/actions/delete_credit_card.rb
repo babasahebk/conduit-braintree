@@ -1,9 +1,8 @@
-require 'conduit/braintree/json/credit_card'
-require 'conduit/braintree/actions/base'
+require "conduit/braintree/json/credit_card"
+require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class DeleteCreditCard < Base
-
     required_attributes :token
 
     private
@@ -15,7 +14,7 @@ module Conduit::Driver::Braintree
     def perform_request
       response = Braintree::CreditCard.delete(@options[:token])
 
-      body = MultiJson.dump({ successful: response })
+      body = MultiJson.dump(successful: response)
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
 

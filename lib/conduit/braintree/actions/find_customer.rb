@@ -1,5 +1,5 @@
-require 'conduit/braintree/json/customer'
-require 'conduit/braintree/actions/base'
+require "conduit/braintree/json/customer"
+require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class FindCustomer < Base

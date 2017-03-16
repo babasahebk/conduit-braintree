@@ -1,6 +1,4 @@
-require 'spec_helper'
-require 'braintree'
-require 'conduit/braintree'
+require "spec_helper"
 
 describe Conduit::Driver::Braintree::FindCustomer do
   subject do
@@ -8,28 +6,27 @@ describe Conduit::Driver::Braintree::FindCustomer do
   end
 
   let(:options) do
-    { merchant_id:      'hello-labs-1',
-      private_key:      'hello-labs-ssh',
-      public_key:       'hello-world',
+    { merchant_id:      "hello-labs-1",
+      private_key:      "hello-labs-ssh",
+      public_key:       "hello-world",
       environment:      :sandbox,
       mock_status:      mock_status,
-      customer_id:      'f2b5gb_1'
-    }
+      customer_id:      "f2b5gb_1" }
   end
 
   let(:amount) { 10 }
 
-  describe '#perform' do
-    context 'with a successful authorization' do
-      let(:mock_status)       { 'success' }
+  describe "#perform" do
+    context "with a successful authorization" do
+      let(:mock_status)       { "success" }
       its(:response_status)   { should eql mock_status }
       its(:customer_id)       { should eql options[:customer_id] }
       its(:first_name)        { should_not be_empty }
       its(:last_name)         { should_not be_empty }
     end
 
-    context 'with a failure authorizing' do
-      let(:mock_status)        { 'failure' }
+    context "with a failure authorizing" do
+      let(:mock_status)        { "failure" }
       its(:response_status)    { should eql mock_status }
       its(:errors) do
         expected = [

@@ -1,4 +1,4 @@
-require 'conduit/braintree/json/base'
+require "conduit/braintree/json/base"
 
 module Conduit::Driver::Braintree
   module Json
@@ -13,11 +13,11 @@ module Conduit::Driver::Braintree
 
       def transaction_attributes
         attr_names = Conduit::Driver::Braintree::AuthorizeTransaction::Parser.
-          attributes
+                     attributes
 
         attr_names.inject({}) do |h, attr_name|
           if attr_name =~ /transaction/
-            transaction_attr = attr_name.to_s.gsub(/transaction_/, '')
+            transaction_attr = attr_name.to_s.gsub(/transaction_/, "")
 
             h.merge(transaction_attr => response.transaction.send(transaction_attr))
           else

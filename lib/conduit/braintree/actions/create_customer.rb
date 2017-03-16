@@ -1,9 +1,8 @@
-require 'conduit/braintree/json/customer'
-require 'conduit/braintree/actions/base'
+require "conduit/braintree/json/customer"
+require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class CreateCustomer < Base
-
     required_attributes :customer_id
     optional_attributes :first_name, :last_name, :company, :email, :phone, :fax,
                         :website, :device_data
@@ -12,7 +11,7 @@ module Conduit::Driver::Braintree
 
     def perform_request
       create_options = whitelist_options.except(:customer_id)
-      create_options.merge!(id: @options[:customer_id])
+      create_options[:id] = @options[:customer_id]
       create_options[:device_data] = @options[:device_data] unless @options[:device_data].blank?
 
       response = Braintree::Customer.create(create_options)
