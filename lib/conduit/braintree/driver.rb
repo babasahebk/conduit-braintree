@@ -18,6 +18,7 @@ module Conduit
       action :settle_transaction
       action :refund_transaction
       action :find_transaction
+      action :client_token
     end
   end
 end
