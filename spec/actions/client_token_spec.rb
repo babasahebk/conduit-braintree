@@ -15,6 +15,14 @@ describe Conduit::Driver::Braintree::ClientToken do
     }
   end
 
+  describe "view" do
+    let(:mock_status)       { "success" }
+
+    it "is empty" do
+      expect(described_class.new(options).view).to eql ""
+    end
+  end
+
   describe "#perform" do
     let(:mock_status)       { "success" }
     its(:response_status)   { should eql mock_status }
