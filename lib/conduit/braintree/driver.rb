@@ -11,6 +11,7 @@ module Conduit
       action :create_customer
       action :find_customer
       action :create_credit_card
+      action :create_payment_method
       action :update_credit_card
       action :delete_credit_card
       action :authorize_transaction
