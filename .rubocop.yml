@@ -8,7 +8,7 @@ AllCops:
   Exclude:
     - vendor/**/*
     - db/**/*
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
 Rails:
   Enabled: true
@@ -17,6 +17,15 @@ Style/CaseIndentation:
   Enabled: false
 
 Style/Lambda:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Performance/Casecmp:
+  Enabled: false
+
+Style/GuardClause:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
@@ -52,7 +61,6 @@ AndOr:
 EndAlignment:
   Description: "Align ends correctly."
   Enabled: true
-  AlignWith: variable
 
 CollectionMethods:
   Description: "Preferred collection methods."
@@ -70,6 +78,14 @@ AssignmentInCondition:
 
 DoubleNegation:
   Description: "Checks for uses of double negation (!!)."
+  Enabled: false
+
+Style/BlockDelimiters:
+  Description: >-
+                Avoid using {...} for multi-line blocks (multiline chaining is
+                always ugly).
+                Prefer {...} over do...end for single-line blocks.
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'
   Enabled: false
 
 SpaceBeforeFirstArg:
@@ -91,10 +107,5 @@ RescueModifier:
 StringLiterals:
   EnforcedStyle: double_quotes
 
-Style/BlockDelimiters:
-  Description: >-
-                Avoid using {...} for multi-line blocks (multiline chaining is
-                always ugly).
-                Prefer {...} over do...end for single-line blocks.
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'
+StringLiteralsInInterpolation:
   Enabled: false
