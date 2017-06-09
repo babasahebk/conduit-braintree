@@ -15,16 +15,16 @@ end
 
 Braintree::Configuration.logger.level = Logger::WARN
 
-WebMock.disable_net_connect!(allow: %w(codeclimate.com))
+WebMock.disable_net_connect!(allow: %w[codeclimate.com])
 
 # Rspec Configuration
 #
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
-    c.syntax = [:should, :expect]
+    c.syntax = %i[should expect]
   end
 
   config.mock_with :rspec do |c|
-    c.syntax = [:should, :expect]
+    c.syntax = %i[should expect]
   end
 end

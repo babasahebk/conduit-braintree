@@ -22,7 +22,7 @@ describe Conduit::Driver::Braintree::FindTransaction do
     end
 
     context "with a failure" do
-      let(:mock_status)     { 'failure' }
+      let(:mock_status)     { "failure" }
       its(:response_status) { should eql mock_status }
 
       it "should have errors" do

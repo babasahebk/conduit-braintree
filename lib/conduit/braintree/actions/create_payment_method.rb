@@ -19,7 +19,6 @@ module Conduit::Driver::Braintree
       else
         respond_with_error(response.errors.map(&:message).join("."))
       end
-
     rescue Braintree::BraintreeError => error
       report_braintree_exceptions(error)
     end

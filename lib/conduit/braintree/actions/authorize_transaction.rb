@@ -15,15 +15,14 @@ module Conduit::Driver::Braintree
     def perform_request
       parameters = { amount: @options[:amount],
                     payment_method_token: @options[:token] }
-      parameters[:merchant_account_id] = @options[:merchant_account_id] unless @options[:merchant_account_id].blank?
-      parameters[:device_data] = @options[:device_data] unless @options[:device_data].blank?
+      parameters[:merchant_account_id] = @options[:merchant_account_id] if @options[:merchant_account_id].present?
+      parameters[:device_data] = @options[:device_data] if @options[:device_data].present?
 
       response = Braintree::Transaction.sale(parameters)
       body = Conduit::Driver::Braintree::Json::Transaction.new(response).to_json
 
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
-
     rescue Braintree::BraintreeError => error
       report_braintree_exceptions(error)
     end

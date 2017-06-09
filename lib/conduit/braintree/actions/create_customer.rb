@@ -12,7 +12,7 @@ module Conduit::Driver::Braintree
     def perform_request
       create_options = whitelist_options.except(:customer_id)
       create_options[:id] = @options[:customer_id]
-      create_options[:device_data] = @options[:device_data] unless @options[:device_data].blank?
+      create_options[:device_data] = @options[:device_data] if @options[:device_data].present?
 
       response = Braintree::Customer.create(create_options)
       body     = Conduit::Driver::Braintree::Json::Customer.new(response).to_json

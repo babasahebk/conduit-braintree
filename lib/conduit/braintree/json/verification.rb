@@ -1,15 +1,15 @@
 module Conduit::Driver::Braintree
   module Json
     module Verification
-      RESPONSE_CODE_ATTRIBUTES = %i(avs_postal_code_response_code
+      RESPONSE_CODE_ATTRIBUTES = %i[avs_postal_code_response_code
                                     avs_street_address_response_code
-                                    cvv_response_code).freeze
+                                    cvv_response_code].freeze
 
-      VERIFICATION_ATTRIBUTES  = %i(avs_error_response_code
+      VERIFICATION_ATTRIBUTES  = %i[avs_error_response_code
                                     gateway_rejection_reason
                                     processor_response_code
                                     processor_response_text
-                                    verification_status) + RESPONSE_CODE_ATTRIBUTES
+                                    verification_status] + RESPONSE_CODE_ATTRIBUTES
 
       private
 

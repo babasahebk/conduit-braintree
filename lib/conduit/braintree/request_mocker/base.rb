@@ -44,7 +44,7 @@ module Conduit::Braintree::RequestMocker
 
         {
           status: @status,
-          headers: { 'Content-Encoding' => 'gzip' },
+          headers: { "Content-Encoding" => "gzip" },
           body: response || render_empty_response
         }
       end
@@ -119,7 +119,7 @@ class MockHelpers
   private
 
   def card_number
-    return TEST_CARD_NUMBER if number =~ /javascript/
+    return TEST_CARD_NUMBER if number.match?(/javascript/)
     number
   end
 

@@ -34,5 +34,4 @@ describe Conduit::Driver::Braintree::CreatePaymentMethod do
       end
     end
   end
-
 end

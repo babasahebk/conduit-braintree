@@ -26,15 +26,15 @@ module Conduit::Driver::Braintree
 
       def base_options
         errors = if response.respond_to?(:errors)
-          response.errors.inject({}) do |errors, error|
-            attr_id = error.attribute || :base
-            attr_id = attr_id.to_s.underscore.to_sym
-            val = errors[attr_id] || []
-            val.push("#{error.message} (#{error.code})")
-            errors.merge(attr_id => val)
-          end
-        else
-          []
+                   response.errors.inject({}) do |errors, error|
+                     attr_id = error.attribute || :base
+                     attr_id = attr_id.to_s.underscore.to_sym
+                     val = errors[attr_id] || []
+                     val.push("#{error.message} (#{error.code})")
+                     errors.merge(attr_id => val)
+                   end
+                 else
+                   []
         end
 
         { successful: successful, errors: errors, message: message }

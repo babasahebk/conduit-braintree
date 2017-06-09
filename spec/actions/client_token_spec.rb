@@ -16,7 +16,7 @@ describe Conduit::Driver::Braintree::ClientToken do
   end
 
   describe "view" do
-    let(:mock_status)       { "success" }
+    let(:mock_status) { "success" }
 
     it "is empty" do
       expect(described_class.new(options).view).to eql ""
@@ -40,5 +40,4 @@ describe Conduit::Driver::Braintree::ClientToken do
       should eql expected
     end
   end
-
 end

@@ -30,7 +30,7 @@ module Conduit::Driver::Braintree
       def object_path(path)
         data = json
         path.split("/").map do |element|
-          key = element =~ /\A\d+\Z/ ? element.to_i : element.to_sym
+          key = element.match?(/\A\d+\Z/) ? element.to_i : element.to_sym
           data = data.nil? ? nil : data[key]
         end.last
       end
@@ -50,7 +50,7 @@ module Conduit::Driver::Braintree
       end
 
       def detailed_errors?
-        !(object_path("errors").nil? || object_path("errors").empty?)
+        object_path("errors").present?
       end
 
       def normalized_error_objects
