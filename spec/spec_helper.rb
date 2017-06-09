@@ -3,6 +3,8 @@
 require "conduit/braintree"
 require "rspec/its"
 require "webmock/rspec"
+require "pry"
+
 include Conduit::Driver::Braintree
 
 # Load all of the _spec.rb files

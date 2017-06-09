@@ -11,7 +11,9 @@ module Conduit::Driver::Braintree
     end
 
     attribute :transaction_amount do
-      BigDecimal(object_path("transaction/amount"))
+      transaction_amount = object_path("transaction/amount")
+      return nil if transaction_amount.blank?
+      transaction_amount.to_d
     end
 
     attribute :transaction_status do
