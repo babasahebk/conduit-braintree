@@ -23,10 +23,10 @@ module Conduit::Driver::Braintree
 
     def error_message(response)
       message = response.errors.map { |error| "#{error.code}: #{error.message}" }.join(".")
-        if response.message.present?
-          message.concat(". ") if message.present?
-          message.concat(response.message)
-        end
+      if response.message.present?
+        message.concat(". ") if message.present?
+        message.concat(response.message)
+      end
       message
     end
 
