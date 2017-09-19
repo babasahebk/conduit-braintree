@@ -28,7 +28,7 @@ describe Conduit::Driver::Braintree::CreatePaymentMethod do
       its(:errors) do
         expected = [
           Conduit::Error.new(attribute: :base,
-            message: "Invalid verification merchant account ID (error)")
+            message: "917218: Invalid verification merchant account ID. Transaction Declined (error)")
         ]
         should eql expected
       end
