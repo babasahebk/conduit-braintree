@@ -1,5 +1,5 @@
 module Conduit
   module Braintree
-    VERSION = "1.2.6".freeze
+    VERSION = "1.2.7".freeze
   end
 end
