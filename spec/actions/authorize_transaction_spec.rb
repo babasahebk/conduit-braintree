@@ -76,8 +76,35 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       end
 
       it "should send device data" do
-        expect(Braintree::Transaction).to receive(:sale).with(amount: options[:amount],
-          payment_method_token: options[:token], device_data: "test").and_call_original
+        expect(Braintree::Transaction).to receive(:sale).with(
+          amount: options[:amount],
+          payment_method_token: options[:token], device_data: "test",
+          options: { skip_advanced_fraud_checking: true }
+        ).and_call_original
+        expect(subject.transaction_status).to eql "authorized"
+      end
+    end
+
+    context "with fraud checking option" do
+      let(:mock_status) { "success" }
+      let(:options) do
+        { merchant_id: "hello-labs-1",
+          private_key: "hello-labs-ssh",
+          public_key:  "hello-world",
+          environment: :sandbox,
+          amount:      amount,
+          token:       "test-101",
+          mock_status: mock_status,
+          enable_fraud_checking: true }
+      end
+
+      it "does not skip fraud checking" do
+        expect(Braintree::Transaction).to receive(:sale).with(
+          amount: options[:amount],
+          payment_method_token: options[:token],
+          options: { skip_advanced_fraud_checking: false }
+        ).and_call_original
+
         expect(subject.transaction_status).to eql "authorized"
       end
     end
@@ -96,8 +123,11 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       let(:mock_status) { "success" }
 
       before do
-        expect(Braintree::Transaction).to receive(:sale).with(amount: options[:amount],
-          payment_method_token: options[:token]).and_call_original
+        expect(Braintree::Transaction).to receive(:sale).with(
+          amount: options[:amount],
+          payment_method_token: options[:token],
+          options: { skip_advanced_fraud_checking: true }
+        ).and_call_original
       end
 
       its(:transaction_status) { should eql "authorized" }

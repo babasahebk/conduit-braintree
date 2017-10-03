@@ -13,8 +13,13 @@ module Conduit::Driver::Braintree
     # request.
     #
     def perform_request
-      parameters = { amount: @options[:amount],
-                    payment_method_token: @options[:token] }
+      parameters = {
+        amount: @options[:amount],
+        payment_method_token: @options[:token],
+        options: {
+          skip_advanced_fraud_checking: !@options[:enable_fraud_checking]
+        }
+      }
       parameters[:merchant_account_id] = @options[:merchant_account_id] if @options[:merchant_account_id].present?
       parameters[:device_data] = @options[:device_data] if @options[:device_data].present?
 
