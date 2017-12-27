@@ -21,6 +21,8 @@ describe Conduit::Driver::Braintree::CreatePaymentMethod do
     let(:mock_status)       { "success" }
     its(:response_status)   { should eql mock_status }
     its(:token)             { should_not be_empty }
+    its(:billing_address)   { should include(postal_code: "29650") }
+    its(:billing_address)   { should include(street_address: "123 Main St") }
 
     context "with a failure authorizing" do
       let(:mock_status)        { "failure" }

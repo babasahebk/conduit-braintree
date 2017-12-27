@@ -7,4 +7,8 @@
   <card-type>Visa</card-type>
   <bin><%= mock.bin %></bin>
   <last-4><%= mock.last_4 %></last-4>
+  <billing-address>
+    <street-address><%= billing_address[:street_address] %></street-address>
+    <postal-code><%= billing_address[:postal_code] %></postal-code>
+  </billing-address>
 </credit-card>

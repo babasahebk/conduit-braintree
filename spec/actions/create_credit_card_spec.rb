@@ -17,7 +17,7 @@ describe Conduit::Driver::Braintree::CreateCreditCard do
       cvv:              "123",
       expiration_month: 12,
       expiration_year:  2099,
-      billing_address:  { street_address: "123 Main St" },
+      billing_address:  { street_address: "321 Main St", postal_code: "12345" },
       verification_merchant_account_id: "TESTIT" }
   end
 
@@ -35,6 +35,8 @@ describe Conduit::Driver::Braintree::CreateCreditCard do
       its(:last_four)         { should eql "1111" }
       its(:token)             { should_not be_empty }
       its(:message)           { should be_nil }
+      its(:billing_address)   { should include(postal_code: "12345") }
+      its(:billing_address)   { should include(street_address: "321 Main St") }
     end
 
     context "with a failure authorizing" do

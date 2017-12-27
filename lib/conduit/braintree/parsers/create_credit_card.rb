@@ -30,6 +30,10 @@ module Conduit::Driver::Braintree
       object_path("credit_card/bin")
     end
 
+    attribute :billing_address do
+      object_path("credit_card/billing_address")
+    end
+
     attribute :avs_error_response_code do
       object_path("avs_error_response_code")
     end
