@@ -116,6 +116,14 @@ class MockHelpers
     card_number[-4, 4]
   end
 
+  def postal_code
+    "29650"
+  end
+
+  def street_address
+    "123 Main St"
+  end
+
   private
 
   def card_number
