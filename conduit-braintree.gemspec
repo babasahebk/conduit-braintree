@@ -22,16 +22,16 @@ Gem::Specification.new do |s|
 
   # Dependencies
   #
-  s.add_dependency "conduit",           "~> 1.1.1"
-  s.add_dependency "multi_json",        "~> 1.10.1"
-  s.add_dependency "braintree",         "~> 2.78.0"
-  s.add_dependency "webmock",           "~> 2.3.2"
+  s.add_dependency "braintree",  "~> 2.83.0"
+  s.add_dependency "conduit",    "~> 1.1.1"
+  s.add_dependency "multi_json", "~> 1.10.1"
+  s.add_dependency "webmock",    ">= 2.3"
 
   # Development Dependencies
   #
-  s.add_development_dependency "shoulda-matchers"
+  s.add_development_dependency "pry"
+  s.add_development_dependency "rails"
   s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-its"
-  s.add_development_dependency "rails"
-  s.add_development_dependency "pry"
+  s.add_development_dependency "shoulda-matchers"
 end
