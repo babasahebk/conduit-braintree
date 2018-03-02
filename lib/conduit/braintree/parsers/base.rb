@@ -5,7 +5,7 @@ module Conduit::Driver::Braintree
     class Base < Conduit::Core::Parser
       attr_reader :json, :http_status
 
-      def initialize(response_body, http_status: nil)
+      def initialize(response_body, http_status = nil)
         response_body ||= "{}"
         @json = MultiJson.load(response_body, symbolize_keys: true)
         @http_status = http_status
