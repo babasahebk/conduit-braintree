@@ -3,7 +3,7 @@ PATH
   specs:
     conduit-braintree (1.3.3)
       braintree (~> 2.83.0)
-      conduit (~> 1.1.1)
+      conduit (~> 1.1.9)
       multi_json (~> 1.10.1)
       webmock (>= 2.3)
 
@@ -63,7 +63,7 @@ GEM
     builder (3.2.3)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
-    conduit (1.1.8)
+    conduit (1.1.9)
       activesupport
       aws-sdk (~> 2)
       excon
