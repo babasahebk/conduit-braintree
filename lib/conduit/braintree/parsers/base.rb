@@ -3,11 +3,12 @@ require "multi_json"
 module Conduit::Driver::Braintree
   module Parser
     class Base < Conduit::Core::Parser
-      attr_reader :json
+      attr_reader :json, :http_status
 
-      def initialize(response_body)
+      def initialize(response_body, http_status = nil)
         response_body ||= "{}"
         @json = MultiJson.load(response_body, symbolize_keys: true)
+        @http_status = http_status
       rescue MultiJson::ParseError
         @json = { errors: ["Unable to parse response"] }
       end

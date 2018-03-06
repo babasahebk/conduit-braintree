@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   # Dependencies
   #
   s.add_dependency "braintree",  "~> 2.83.0"
-  s.add_dependency "conduit",    "~> 1.1.1"
+  s.add_dependency "conduit",    "~> 1.1.9"
   s.add_dependency "multi_json", "~> 1.10.1"
   s.add_dependency "webmock",    ">= 2.3"
 
