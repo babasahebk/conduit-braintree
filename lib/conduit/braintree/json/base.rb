@@ -45,7 +45,13 @@ module Conduit::Driver::Braintree
       end
 
       def message
-        response.respond_to?(:message) ? response.message : nil
+        response.respond_to?(:message) ? message_with_code(response.message) : nil
+      end
+
+      def message_with_code(message)
+        code = verification_attributes[:processor_response_code]
+        message << " (#{code})" if code.present?
+        message
       end
     end
   end
