@@ -42,14 +42,14 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
     context "with a processor failure" do
       let(:mock_status) { "processor_failure" }
       it "returns a failure message" do
-        expect(subject.message).to eql "Limit Exceeded"
+        expect(subject.message).to eql "Limit Exceeded (2002)"
       end
     end
 
     context "with a processor failure" do
       let(:mock_status) { "gateway_failure" }
       it "returns a failure message" do
-        expect(subject.message).to eql "Gateway Rejected: fraud"
+        expect(subject.message).to eql "Gateway Rejected: fraud (9999)"
       end
     end
 
