@@ -43,13 +43,15 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       let(:mock_status) { "processor_failure" }
       it "returns a failure message" do
         expect(subject.message).to eql "Limit Exceeded (2002)"
+        expect(subject.error_type).to eql "soft"
       end
     end
 
     context "with a processor failure" do
       let(:mock_status) { "gateway_failure" }
       it "returns a failure message" do
-        expect(subject.message).to eql "Gateway Rejected: fraud (9999)"
+        expect(subject.message).to eql "Gateway Rejected: fraud (2004)"
+        expect(subject.error_type).to eql "hard"
       end
     end
 
@@ -82,6 +84,7 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
           options: { skip_advanced_fraud_checking: true }
         ).and_call_original
         expect(subject.transaction_status).to eql "authorized"
+        expect(subject.error_type).to eql nil
       end
     end
 
