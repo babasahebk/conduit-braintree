@@ -5,6 +5,7 @@ require "conduit/braintree/configuration"
 require "conduit/braintree/version"
 require "conduit/braintree/request_mocker"
 require "conduit/not_found_error"
+require "conduit/braintree/errors"
 
 # Set the driver path
 Conduit.configure do |config|
