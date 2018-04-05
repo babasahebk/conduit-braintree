@@ -43,6 +43,8 @@ module Conduit::Driver::Braintree
       when "Braintree::NotFoundError"
         identifier = @options[:token] || @options[:customer_id]
         respond_with_error("Failed to find resource with identifier #{identifier}")
+      when "Net::ReadTimeout"
+        respond_with_error("Braintree timeout error")
       else
         respond_with_error("Braintree error")
       end
