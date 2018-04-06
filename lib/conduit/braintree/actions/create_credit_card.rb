@@ -16,7 +16,7 @@ module Conduit::Driver::Braintree
     #
     def perform_request
       @raw_response = Braintree::CreditCard.create(whitelist_options)
-      body = Conduit::Driver::Braintree::Json::CreditCard.new(@raw_response).to_json
+      Conduit::Driver::Braintree::Json::CreditCard.new(@raw_response).to_json
     end
 
     # Request verification when the card is

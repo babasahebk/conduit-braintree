@@ -6,7 +6,7 @@ module Conduit::Driver::Braintree
 
     def perform_request
       @raw_response = Braintree::ClientToken.generate(whitelist_options)
-      body = { client_token: @raw_response, successful: true }.to_json
+      { client_token: @raw_response, successful: true }.to_json
     end
   end
 end

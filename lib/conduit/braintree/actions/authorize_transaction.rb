@@ -24,7 +24,7 @@ module Conduit::Driver::Braintree
       parameters[:device_data] = @options[:device_data] if @options[:device_data].present?
 
       @raw_response = Braintree::Transaction.sale(parameters)
-      body = Conduit::Driver::Braintree::Json::Transaction.new(@raw_response).to_json
+      Conduit::Driver::Braintree::Json::Transaction.new(@raw_response).to_json
     end
   end
 end
