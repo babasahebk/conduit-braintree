@@ -18,13 +18,7 @@ module Conduit::Driver::Braintree
     # Performs the request, with mocking if requested
     #
     def perform
-      body = if mock_mode?
-               mocker = request_mocker.new(self, @options)
-               mocker.with_mocking { perform_request }
-             else
-               perform_request
-             end
-
+      body = perform_action
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: @raw_response, body: body, parser: parser)
     rescue Conduit::NotFoundError
@@ -35,6 +29,15 @@ module Conduit::Driver::Braintree
       report_braintree_exceptions(error)
     rescue Net::ReadTimeout, Net::OpenTimeout, Errno::ETIMEDOUT
       respond_with_error("Braintree timeout")
+    end
+
+    def perform_action
+      if mock_mode?
+         mocker = request_mocker.new(self, @options)
+         mocker.with_mocking { perform_request }
+       else
+         perform_request
+       end
     end
 
     def report_braintree_exceptions(exception)
