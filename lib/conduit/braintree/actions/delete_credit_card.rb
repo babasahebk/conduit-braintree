@@ -12,13 +12,8 @@ module Conduit::Driver::Braintree
     # request.
     #
     def perform_request
-      response = Braintree::CreditCard.delete(@options[:token])
-
-      body = MultiJson.dump(successful: response)
-      parser = parser_class.new(body)
-      Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
-    rescue Braintree::BraintreeError => error
-      report_braintree_exceptions(error)
+      @raw_response = Braintree::CreditCard.delete(@options[:token])
+      MultiJson.dump(successful: @raw_response)
     end
   end
 end

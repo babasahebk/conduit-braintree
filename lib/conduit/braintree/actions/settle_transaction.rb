@@ -12,15 +12,10 @@ module Conduit::Driver::Braintree
     # request.
     #
     def perform_request
-      response = Braintree::Transaction.submit_for_settlement(
+      @raw_response = Braintree::Transaction.submit_for_settlement(
         @options[:reference_number], @options[:amount]
       )
-      body = Conduit::Driver::Braintree::Json::Transaction.new(response).to_json
-
-      parser = parser_class.new(body)
-      Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
-    rescue Braintree::BraintreeError => error
-      report_braintree_exceptions(error)
+      Conduit::Driver::Braintree::Json::Transaction.new(@raw_response).to_json
     end
   end
 end

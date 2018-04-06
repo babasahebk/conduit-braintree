@@ -5,14 +5,8 @@ module Conduit::Driver::Braintree
     private
 
     def perform_request
-      response = Braintree::ClientToken.generate(whitelist_options)
-      body = { client_token: response, successful: true }.to_json
-      parser = parser_class.new(body)
-      Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
-    rescue ArgumentError => error
-      respond_with_error(error.message)
-    rescue Braintree::BraintreeError => error
-      report_braintree_exceptions(error)
+      @raw_response = Braintree::ClientToken.generate(whitelist_options)
+      body = { client_token: @raw_response, successful: true }.to_json
     end
   end
 end
