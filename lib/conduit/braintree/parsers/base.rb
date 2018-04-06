@@ -14,8 +14,17 @@ module Conduit::Driver::Braintree
       end
 
       def response_status
-        data = json
         object_path("successful") ? "success" : "failure"
+      end
+
+      def error_type
+        return if object_path("successful")
+        hard_error_message? ? "hard" : "soft"
+      end
+
+      def hard_error_message?
+        msg = errors.map(&:message).join(",")
+        Conduit::Braintree::Errors.hard_error_codes.any? { |code| msg.match?(code) }
       end
 
       # Returns a hash of errors reported by Braintree
