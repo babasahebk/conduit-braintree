@@ -20,17 +20,21 @@ describe Conduit::Driver::Braintree::CreatePaymentMethod do
 
   subject { described_class.new(options) }
 
-  describe "#expand_device_data" do
+  context "expanding device_data" do
     context "when device_data is a string" do
       it "keeps device_data in options" do
         options[:device_data] = "somestring"
-        expect { subject.expand_device_data }.not_to change { subject.options }
+        expect(subject.options.key?(:device_data)).to eql(true)
+        expect(subject.options.key?(:device_session_id)).to eql(false)
+        expect(subject.options.key?(:fraud_merchant_id)).to eql(false)
       end
     end
 
     context "when device_data is a hash" do
-      it "keeps device_data in options" do
-        expect { subject.expand_device_data }.to change { subject.options }
+      it "replaces device_data with child params" do
+        expect(subject.options.key?(:device_data)).to eql(false)
+        expect(subject.options.key?(:device_session_id)).to eql(true)
+        expect(subject.options.key?(:fraud_merchant_id)).to eql(true)
       end
     end
   end

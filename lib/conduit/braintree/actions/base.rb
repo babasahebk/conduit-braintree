@@ -14,6 +14,7 @@ module Conduit::Driver::Braintree
 
     def initialize(options)
       super(options)
+      expand_device_data
       configure_braintree
     end
 
@@ -102,6 +103,11 @@ module Conduit::Driver::Braintree
 
     def mock_mode?
       @options.key?(:mock_status)
+    end
+
+    def expand_device_data
+      return unless @options[:device_data].is_a?(Hash)
+      @options.merge!(@options.delete(:device_data))
     end
   end
 end

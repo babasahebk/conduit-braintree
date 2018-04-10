@@ -7,15 +7,9 @@ module Conduit::Driver::Braintree
 
     attr_accessor :raw_response
 
-    def expand_device_data
-      return unless @options[:device_data].is_a?(Hash)
-      @options.merge!(@options.delete(:device_data))
-    end
-
     private
 
     def perform_request
-      expand_device_data
       @raw_response = Braintree::PaymentMethod.create(whitelist_options)
       if success?
         generate_body(credit_card_response)
