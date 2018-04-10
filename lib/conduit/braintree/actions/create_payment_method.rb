@@ -2,9 +2,9 @@ require "conduit/braintree/actions/base"
 
 module Conduit::Driver::Braintree
   class CreatePaymentMethod < Base
-    # To create a new payment method for an existing customer,
-    # the only required attributes are the customer ID and payment method nonce.
     required_attributes :payment_method_nonce, :customer_id
+    optional_attributes :device_data, :device_session_id, :fraud_merchant_id
+
     attr_accessor :raw_response
 
     private
@@ -27,7 +27,7 @@ module Conduit::Driver::Braintree
     end
 
     def error_response
-      OpenStruct.new(success?: false, errors: [OpenStruct.new(attribute: :base, code: "error", 
+      OpenStruct.new(success?: false, errors: [OpenStruct.new(attribute: :base, code: "error",
         message: error_message)])
     end
 

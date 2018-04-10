@@ -10,8 +10,11 @@ module Conduit::Driver::Braintree
         *Conduit::Driver::Braintree.optional_attributes
     end
 
+    attr_accessor :options
+
     def initialize(options)
       super(options)
+      expand_device_data
       configure_braintree
     end
 
@@ -33,11 +36,11 @@ module Conduit::Driver::Braintree
 
     def perform_action
       if mock_mode?
-         mocker = request_mocker.new(self, @options)
-         mocker.with_mocking { perform_request }
-       else
-         perform_request
-       end
+        mocker = request_mocker.new(self, @options)
+        mocker.with_mocking { perform_request }
+      else
+        perform_request
+      end
     end
 
     def report_braintree_exceptions(exception)
@@ -100,6 +103,11 @@ module Conduit::Driver::Braintree
 
     def mock_mode?
       @options.key?(:mock_status)
+    end
+
+    def expand_device_data
+      return unless @options[:device_data].is_a?(Hash)
+      @options.merge!(@options.delete(:device_data))
     end
   end
 end
