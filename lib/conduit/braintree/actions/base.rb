@@ -10,6 +10,8 @@ module Conduit::Driver::Braintree
         *Conduit::Driver::Braintree.optional_attributes
     end
 
+    attr_accessor :options
+
     def initialize(options)
       super(options)
       configure_braintree
@@ -33,11 +35,11 @@ module Conduit::Driver::Braintree
 
     def perform_action
       if mock_mode?
-         mocker = request_mocker.new(self, @options)
-         mocker.with_mocking { perform_request }
-       else
-         perform_request
-       end
+        mocker = request_mocker.new(self, @options)
+        mocker.with_mocking { perform_request }
+      else
+        perform_request
+      end
     end
 
     def report_braintree_exceptions(exception)
