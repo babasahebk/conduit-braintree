@@ -14,13 +14,8 @@ module Conduit::Driver::Braintree
       create_options[:id] = @options[:customer_id]
       create_options[:device_data] = @options[:device_data] if @options[:device_data].present?
 
-      response = Braintree::Customer.create(create_options)
-      body     = Conduit::Driver::Braintree::Json::Customer.new(response).to_json
-
-      parser = parser_class.new(body)
-      Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
-    rescue Braintree::BraintreeError => error
-      report_braintree_exceptions(error)
+      @raw_response = Braintree::Customer.create(create_options)
+      body     = Conduit::Driver::Braintree::Json::Customer.new(@raw_response).to_json
     end
   end
 end

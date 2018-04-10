@@ -8,13 +8,8 @@ module Conduit::Driver::Braintree
     private
 
     def perform_request
-      response = Braintree::Transaction.find(@options[:reference_number])
-      body     = Conduit::Driver::Braintree::Json::Transaction.new(OpenStruct.new(transaction: response)).to_json
-
-      parser = parser_class.new(body)
-      Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
-    rescue Braintree::BraintreeError => error
-      report_braintree_exceptions(error)
+      @raw_response = Braintree::Transaction.find(@options[:reference_number])
+      Conduit::Driver::Braintree::Json::Transaction.new(OpenStruct.new(transaction: @raw_response)).to_json
     end
   end
 end

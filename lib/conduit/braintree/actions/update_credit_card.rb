@@ -16,15 +16,8 @@ module Conduit::Driver::Braintree
     # request.
     #
     def perform_request
-      response = Braintree::CreditCard.update(@options[:token], whitelist_options)
-      body = Conduit::Driver::Braintree::Json::CreditCard.new(response).to_json
-
-      parser = parser_class.new(body)
-      Conduit::ApiResponse.new(raw_response: response, body: body, parser: parser)
-    rescue Braintree::NotFoundError => error
-      raise(Conduit::NotFoundError, error.message)
-    rescue Braintree::BraintreeError => error
-      report_braintree_exceptions(error)
+      @raw_response = Braintree::CreditCard.update(@options[:token], whitelist_options)
+      Conduit::Driver::Braintree::Json::CreditCard.new(@raw_response).to_json
     end
 
     # Request verification when the card is
@@ -43,5 +36,3 @@ module Conduit::Driver::Braintree
     end
   end
 end
-
-class Conduit::NotFoundError < StandardError; end

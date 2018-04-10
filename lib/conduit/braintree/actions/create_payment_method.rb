@@ -12,12 +12,10 @@ module Conduit::Driver::Braintree
     def perform_request
       @raw_response = Braintree::PaymentMethod.create(whitelist_options)
       if success?
-        generate_response(credit_card_response)
+        generate_body(credit_card_response)
       else
-        generate_response(error_response)
+        generate_body(error_response)
       end
-    rescue Braintree::BraintreeError => error
-      report_braintree_exceptions(error)
     end
 
     def success?
@@ -42,10 +40,8 @@ module Conduit::Driver::Braintree
       message
     end
 
-    def generate_response(response_body)
-      body = Conduit::Driver::Braintree::Json::CreditCard.new(response_body).to_json
-      parser = parser_class.new(body)
-      Conduit::ApiResponse.new(raw_response: raw_response, body: body, parser: parser)
+    def generate_body(response_body)
+      Conduit::Driver::Braintree::Json::CreditCard.new(response_body).to_json
     end
   end
 end

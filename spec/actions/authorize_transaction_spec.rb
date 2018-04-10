@@ -135,5 +135,14 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
 
       its(:transaction_status) { should eql "authorized" }
     end
+
+    context "when a timeout exception occurs" do
+      let(:mock_status) { "success" }
+
+      it "should handle exception" do
+        expect(Braintree::Transaction).to receive(:sale).and_raise(Net::ReadTimeout)
+        expect(subject.response_errors.map(&:message).first).to eql "Braintree timeout (error)"
+      end
+    end
   end
 end
