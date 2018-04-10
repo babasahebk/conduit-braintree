@@ -22,7 +22,7 @@ module Conduit::Driver::Braintree
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: @raw_response, body: body, parser: parser)
     rescue Braintree::NotFoundError => error
-      raise(Conduit::NotFoundError, error.message)
+      report_braintree_exceptions(error)
     rescue ArgumentError => error
       respond_with_error(error.message)
     rescue Braintree::BraintreeError => error
