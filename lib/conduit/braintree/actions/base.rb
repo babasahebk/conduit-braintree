@@ -21,8 +21,8 @@ module Conduit::Driver::Braintree
       body = perform_action
       parser = parser_class.new(body)
       Conduit::ApiResponse.new(raw_response: @raw_response, body: body, parser: parser)
-    rescue Conduit::NotFoundError
-      raise
+    rescue Braintree::NotFoundError => error
+      raise(Conduit::NotFoundError, error.message)
     rescue ArgumentError => error
       respond_with_error(error.message)
     rescue Braintree::BraintreeError => error
@@ -103,5 +103,3 @@ module Conduit::Driver::Braintree
     end
   end
 end
-
-class Conduit::NotFoundError < StandardError; end
