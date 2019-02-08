@@ -20,6 +20,14 @@ module Conduit::Driver::Braintree
       object_path("transaction/status")
     end
 
+    attribute :transaction_status_timestamp do
+      object_path("transaction/status_timestamp")
+    end
+
+    attribute :transaction_authorization_expires_at do
+      object_path("transaction/authorization_expires_at")
+    end
+
     attribute :avs_error_response_code do
       object_path("credit_card/avs_error_response_code")
     end
