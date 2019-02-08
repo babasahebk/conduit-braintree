@@ -19,6 +19,8 @@ describe Conduit::Driver::Braintree::FindTransaction do
       let(:mock_status)        { "success" }
       its(:response_status)    { should eql mock_status }
       its(:transaction_status) { should eql "settled" }
+      its(:transaction_status_timestamp) { should eql "2019-02-08 15:44:46 UTC" }
+      its(:transaction_authorization_expires_at) { should eql "2019-02-08 15:44:46 UTC" }
     end
 
     context "with a failure" do
