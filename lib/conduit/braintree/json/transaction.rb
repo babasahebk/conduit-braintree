@@ -34,7 +34,7 @@ module Conduit::Driver::Braintree
 
       def get_updated_status(transaction)
         status_history = Array(transaction.status_history).compact
-        status_history.last&.timestamp
+        status_history.find { |sh| sh.status == transaction.status  }&.timestamp
       end
     end
   end
