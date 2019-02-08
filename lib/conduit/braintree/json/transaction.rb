@@ -20,7 +20,7 @@ module Conduit::Driver::Braintree
             transaction_attr = attr_name.to_s.gsub(/transaction_/, "")
 
             if transaction_attr == "status_timestamp"
-              h.merge(transaction_attr => get_updated_status(response.transaction))
+              h.merge(transaction_attr => get_status_timestamp(response.transaction))
             else
               h.merge(transaction_attr => response.transaction.send(transaction_attr))
             end
@@ -32,7 +32,7 @@ module Conduit::Driver::Braintree
         end
       end
 
-      def get_updated_status(transaction)
+      def get_status_timestamp(transaction)
         status_history = Array(transaction.status_history).compact
         status_history.find { |sh| sh.status == transaction.status  }&.timestamp
       end
