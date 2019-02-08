@@ -34,7 +34,7 @@ module Conduit::Driver::Braintree
 
       def get_status_timestamp(transaction)
         status_history = Array(transaction.status_history).compact
-        status_history.find { |sh| sh.status == transaction.status  }&.timestamp
+        status_history.find { |sh| sh.status == transaction.status }&.timestamp
       end
     end
   end
