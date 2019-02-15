@@ -1,7 +1,5 @@
 # Conduit::Braintree
 
-TODO: Write a gem description
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -15,7 +13,3 @@ And then execute:
 Or install it yourself as:
 
     $ gem install conduit-braintree
-
-## Usage
-
-TODO: Write usage instructions here
