@@ -21,6 +21,7 @@ describe Conduit::Driver::Braintree::FindTransaction do
       its(:transaction_status) { should eql "settled" }
       its(:transaction_status_timestamp) { should eql "2019-02-08 15:44:46 UTC" }
       its(:transaction_authorization_expires_at) { should eql "2019-02-08 15:44:46 UTC" }
+      its(:transaction_settlement_batch_id) { should eql "test_settlement_batch_id" }
     end
 
     context "with a failure" do

@@ -28,6 +28,10 @@ module Conduit::Driver::Braintree
       object_path("transaction/authorization_expires_at")
     end
 
+    attribute :transaction_settlement_batch_id do
+      object_path("transaction/settlement_batch_id")
+    end
+
     attribute :avs_error_response_code do
       object_path("credit_card/avs_error_response_code")
     end
