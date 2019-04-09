@@ -44,6 +44,8 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       it "returns a failure message" do
         expect(subject.message).to eql "Limit Exceeded (2002)"
         expect(subject.error_type).to eql "soft"
+        expect(subject.json[:additional_processor_response]).to eql "2002 : Limit Exceeded"
+        expect(subject.json[:processor_response_type]).to eql "hard_declined"
       end
     end
 
@@ -52,6 +54,8 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       it "returns a failure message" do
         expect(subject.message).to eql "Gateway Rejected: fraud (2004)"
         expect(subject.error_type).to eql "hard"
+        expect(subject.json[:additional_processor_response]).
+          to eql "Additional Processor Response: 63 : SERV NOT ALLOWED"
       end
     end
 

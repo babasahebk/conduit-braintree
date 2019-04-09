@@ -9,6 +9,8 @@ module Conduit::Driver::Braintree
                                     gateway_rejection_reason
                                     processor_response_code
                                     processor_response_text
+                                    processor_response_type
+                                    additional_processor_response
                                     verification_status] + RESPONSE_CODE_ATTRIBUTES
 
       private

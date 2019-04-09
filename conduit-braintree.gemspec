@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_dependency "braintree",  "~> 2.94.0"
+  s.add_dependency "braintree",  "~> 2.95.0"
   s.add_dependency "conduit",    "~> 1.1.9"
   s.add_dependency "multi_json", "~> 1.10.1"
   s.add_dependency "webmock",    ">= 2.3"
