@@ -22,6 +22,13 @@ describe Conduit::Driver::Braintree::FindTransaction do
       its(:transaction_status_timestamp) { should eql "2019-02-08 15:44:46 UTC" }
       its(:transaction_authorization_expires_at) { should eql "2019-02-08 15:44:46 UTC" }
       its(:transaction_settlement_batch_id) { should eql "test_settlement_batch_id" }
+
+      it "should return transaction_status_history" do
+        expect(subject.transaction_status_history).to eql [
+          { status: "authorized", timestamp: "2019-02-07 15:44:46 UTC", transaction_source: "API"},
+          { status: "settled", timestamp: "2019-02-08 15:44:46 UTC", transaction_source: "Recurring"}
+        ]
+      end
     end
 
     context "with a failure" do

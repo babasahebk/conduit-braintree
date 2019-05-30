@@ -11,6 +11,7 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       private_key: "hello-labs-ssh",
       public_key:  "hello-world",
       environment: :sandbox,
+      transaction_source: "recurring",
       amount:      amount,
       token:       "test-101",
       mock_status: mock_status }
@@ -24,6 +25,16 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       its(:response_status)    { should eql mock_status }
       its(:transaction_status) { should eql "authorized" }
       its(:transaction_amount) { should eql amount }
+
+      it "request should contain transaction_source" do
+        expect(described_class.new(options).view).
+          to eql "{\"PaymentMethodToken\":\"test-101\",\"Amount\":10,\"TransactionSource\":\"recurring\"}\n"
+
+        expect(subject.transaction_status_history).to eql [
+          { status: "authorized", timestamp: "2019-02-07 15:44:46 UTC", transaction_source: "API"},
+          { status: "settled", timestamp: "2019-02-08 15:44:46 UTC", transaction_source: "Recurring"}
+        ]
+      end
     end
 
     context "with a failure authorizing" do
@@ -78,13 +89,15 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
           amount:      amount,
           token:       "test-101",
           mock_status: mock_status,
-          device_data: "test" }
+          device_data: "test",
+          transaction_source: "recurring" }
       end
 
       it "should send device data" do
         expect(Braintree::Transaction).to receive(:sale).with(
           amount: options[:amount],
           payment_method_token: options[:token], device_data: "test",
+          transaction_source: "recurring",
           options: { skip_advanced_fraud_checking: true }
         ).and_call_original
         expect(subject.transaction_status).to eql "authorized"

@@ -4,4 +4,16 @@
   <type>sale</type>
   <amount><%= amount %></amount>
   <status>authorized</status>
+  <status-history type="array">
+    <status-event>
+      <status>authorized</status>
+      <timestamp>2019-02-07 15:44:46 UTC</timestamp>
+      <transaction-source>API</transaction-source>
+    </status-event>
+    <status-event>
+      <status>settled</status>
+      <timestamp>2019-02-08 15:44:46 UTC</timestamp>
+      <transaction-source>Recurring</transaction-source>
+    </status-event>
+  </status-history>  
 </transaction>
