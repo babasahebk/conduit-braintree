@@ -24,10 +24,6 @@ module Conduit::Driver::Braintree
       object_path("transaction/status_timestamp")
     end
 
-    attribute :transaction_status_history do
-      object_path("transaction/status_history")
-    end
-
     attribute :transaction_authorization_expires_at do
       object_path("transaction/authorization_expires_at")
     end

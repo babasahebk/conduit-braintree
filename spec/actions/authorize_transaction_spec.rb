@@ -29,11 +29,6 @@ describe Conduit::Driver::Braintree::AuthorizeTransaction do
       it "request should contain transaction_source" do
         expect(described_class.new(options).view).
           to eql "{\"PaymentMethodToken\":\"test-101\",\"Amount\":10,\"TransactionSource\":\"recurring\"}\n"
-
-        expect(subject.transaction_status_history).to eql [
-          { status: "authorized", timestamp: "2019-02-07 15:44:46 UTC", transaction_source: "API"},
-          { status: "settled", timestamp: "2019-02-08 15:44:46 UTC", transaction_source: "Recurring"}
-        ]
       end
     end
 
