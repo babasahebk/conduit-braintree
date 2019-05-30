@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    conduit-braintree (1.4.4)
+    conduit-braintree (1.4.5)
       braintree (~> 2.95.0)
       conduit (~> 1.1.9)
       multi_json (~> 1.10.1)

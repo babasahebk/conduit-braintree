@@ -4,7 +4,7 @@ require "conduit/braintree/actions/base"
 module Conduit::Driver::Braintree
   class AuthorizeTransaction < Base
     required_attributes :amount, :token
-    optional_attributes :merchant_account_id, :device_data
+    optional_attributes :merchant_account_id, :device_data, :transaction_source
 
     private
 
