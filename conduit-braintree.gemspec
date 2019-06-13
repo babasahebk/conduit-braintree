@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "braintree",  "~> 2.95.0"
-  s.add_dependency "conduit",    "~> 1.1.9"
-  s.add_dependency "multi_json", "~> 1.10.1"
+  s.add_dependency "conduit",    "~> 1.2"
+  s.add_dependency "multi_json", "~> 1.10"
   s.add_dependency "webmock",    ">= 2.3"
 end
